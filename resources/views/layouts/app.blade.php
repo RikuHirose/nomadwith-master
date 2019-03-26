@@ -20,21 +20,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-    @if( isset($noFrame) && $noFrame == true )
-
-      @if( isset($header) && $header == true && isset($footer) && $footer == true )
-        @include('layouts._header')
-        @yield('content')
-        @include('layouts.footer')
-      @else
-        @yield('content')
-      @endif
-
-    @else
-        @include('layouts.frame')
-    @endif
-  </div>
-  @include('layouts.scripts')
+    @yield('content')
 </body>
 </html>
