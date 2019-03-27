@@ -10,24 +10,12 @@ export default {
     isLoggedIn: !!user,
     loading: false,
     auth_error: null,
-    entries: [],
-    parameters: [],
-    machine: [],
+    profile: [],
   },
 
   getters: {
     currentUser (state) {
       return state.currentUser
-    },
-
-    entries (state) {
-       return state.entries
-    },
-
-    factory (state) {
-      // 現在は1userに対して最大1factoryなので、0番目を選択中の工場情報として返す
-      if (state.entries.length === 0) { return null }
-      return state.entries[0].factory
     },
 
     updatedTime (state) {
@@ -36,30 +24,15 @@ export default {
       return state.entries[0].date
     },
 
-    parameters (state) {
-      return state.parameters
+    profile (state) {
+      return state.profile
     },
 
-    machine (state) {
-      return state.machine
-    }
   },
 
   mutations: {
-    updateEntries (state, payload) {
-      state.entries = payload
-    },
-
-    updateParameters (state, payload) {
-      state.parameters = payload
-    },
-
-    updateMachine (state, payload) {
-      state.machine = payload
-    },
-
-    setLoading(state, payload) {
-      state.loading = payload
+    updateProfile (state, payload) {
+      state.profile = payload
     },
 
     logout (state) {
@@ -70,32 +43,16 @@ export default {
   },
 
   actions: {
-    getFactory ({ commit }) {
-      commit('setLoading', true)
-      axios
-        .get(`/api/v1/factory/user/${user.id}`, {})
-        .then((response) => {
-          commit('updateEntries', response.data.factory || [])
-          commit('setLoading', false)
-        })
-        .catch((err) => {
-          alert(err)
-          commit('setLoading', false)
-        })
-    },
 
-    getParameters ({ commit }, {machineId, userId}) {
-      commit('setLoading', true)
+    getProfiles ({ commit }, {profileId}) {
+
       axios
-        .get(`/api/v1/machine/${machineId}/user/${userId}`)
+        .get(`/api/v1/profiles/${profileId}`)
         .then((response) => {
-          commit('updateParameters', response.data.parameters || [])
-          commit('updateMachine', response.data.machine || [])
-          commit('setLoading', false)
+          commit('updateProfile', response.data.profile || [])
         })
         .catch((err) => {
           alert(err)
-          commit('setLoading', false)
         })
     },
 

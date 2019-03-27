@@ -1,7 +1,7 @@
 import Container from './components/Container.vue'
 
 import Top from './components/Top.vue'
-// import Machine from './components/factory/Machine.vue'
+import Profile from './components/profiles/profile.vue'
 // import Factory from './components/factory/Factory.vue'
 
 export const routes = [
@@ -19,10 +19,10 @@ export const routes = [
         path: '/',
         component: Top
       },
-      // {
-      //   path: 'machines/:id',
-      //   component: Machine
-      // },
+      {
+        path: 'profiles/:id',
+        component: Profile
+      },
       // {
       //   path: 'factories/:id',
       //   component: Factory
