@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
 
-
-
 use App\Repositories\ProfileRepositoryInterface;
 
 class ProfileController extends Controller
@@ -32,6 +30,7 @@ class ProfileController extends Controller
 
     public function show(Profile $profile)
     {
+      $profile->load('user');
       return response()->json(['profile' => $profile]);
     }
 

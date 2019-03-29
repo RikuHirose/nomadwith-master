@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-2">
     <div class="row justify-content-center">
-      <div class="col-md-12 col-xs-12">
+      <div class="col-md-8 col-xs-12">
         <div class="card card-default">
           <router-view></router-view>
         </div>

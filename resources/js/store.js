@@ -45,7 +45,6 @@ export default {
   actions: {
 
     getProfiles ({ commit }, {profileId}) {
-
       axios
         .get(`/api/v1/profiles/${profileId}`)
         .then((response) => {

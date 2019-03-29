@@ -1905,8 +1905,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'profile-show',
+  data: function data() {
+    return {};
+  },
   created: function created() {
     this.fetch();
   },
@@ -36973,7 +37020,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container pt-2" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12 col-xs-12" }, [
+      _c("div", { staticClass: "col-md-8 col-xs-12" }, [
         _c("div", { staticClass: "card card-default" }, [_c("router-view")], 1)
       ])
     ])
@@ -37211,7 +37258,90 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n  dd\n")])
+  return _c("div", { staticClass: "mt-3" }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "text-center mb-3" }, [
+        _c("img", {
+          staticClass: "rounded-circle",
+          staticStyle: { width: "150px", height: "150px" },
+          attrs: {
+            src:
+              "https://pbs.twimg.com/profile_images/1086579114029461505/qrD4Sdco_400x400.jpg"
+          }
+        }),
+        _vm._v(" "),
+        _c("p", { staticClass: "mt-3 mb-3" }, [
+          _vm._v(_vm._s(_vm.profile.user.name))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-75 mx-auto text-center" }, [
+        _c("p", { staticClass: "mt-3 mb-3" }, [
+          _vm._v(_vm._s(_vm.profile.introduce))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table" }, [
+        _c("tbody", [
+          _c("tr", [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v("居住地")]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.profile.address))])
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v("職業")]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.profile.job))])
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v("年収")]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.profile.salary))])
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v("ノマド")]),
+            _vm._v(" "),
+            _vm.profile.nomad_flag == 1
+              ? _c("td", [_vm._v("ノマド達成済み")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.profile.nomad_flag == 2
+              ? _c("td", [_vm._v("目指している")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.profile.nomad_flag == 3
+              ? _c("td", [_vm._v("ノマドではない")])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v("タバコ")]),
+            _vm._v(" "),
+            _vm.profile.smoke_flag == 1 ? _c("td", [_vm._v("吸う")]) : _vm._e(),
+            _vm._v(" "),
+            _vm.profile.smoke_flag == 2
+              ? _c("td", [_vm._v("吸わない")])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v("アルコール")]),
+            _vm._v(" "),
+            _vm.profile.alcohol_flag == 1
+              ? _c("td", [_vm._v("飲む")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.profile.alcohol_flag == 2
+              ? _c("td", [_vm._v("飲まない")])
+              : _vm._e()
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
