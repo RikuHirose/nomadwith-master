@@ -44,16 +44,30 @@
         </tbody>
       </table>
     </div>
+    <button @click="showModal = true">モーダル表示</button>
+    <contact
+    v-if="showModal"
+    @close="showModal = false"
+    :profileId="profile.id"
+    ></contact>
+
   </div>
 
 </template>
 
 <script>
+import contact from './contact/contact.vue'
+
 export default {
+  components: {
+    'contact': contact,
+  },
   name: 'profile-show',
 
   data () {
     return {
+      showModal: false,
+      message: ''
     }
   },
 
@@ -75,6 +89,16 @@ export default {
     fetch () {
       this.$store.dispatch('getProfiles', {profileId: this.$route.params.id})
     },
+    // sendContact (profileId) {
+    //   axios
+    //     .post(`/api/v1/profiles/${profileId}/contact`)
+    //     .then((response) => {
+          
+    //     })
+    //     .catch((err) => {
+    //       alert(err)
+    //     })
+    // }
   },
 }
 </script>

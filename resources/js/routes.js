@@ -2,7 +2,7 @@ import Container from './components/Container.vue'
 
 import Top from './components/Top.vue'
 import Profile from './components/profiles/profile.vue'
-// import Factory from './components/factory/Factory.vue'
+import Contact from './components/profiles/contact/contact.vue'
 
 export const routes = [
   {
@@ -21,7 +21,13 @@ export const routes = [
       },
       {
         path: 'profiles/:id',
-        component: Profile
+        component: Profile,
+        children: [
+          {
+            path: '/contact',
+            component: Contact
+          },
+        ]
       },
       // {
       //   path: 'factories/:id',

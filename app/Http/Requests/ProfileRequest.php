@@ -24,7 +24,9 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'      => 'required|numeric',
+            // 'user_id'      => 'required|numeric',
+            'user_id'      => 'numeric',
+            'profile_id'   => 'numeric',
             'address'      => 'max:255',
             'job'          => 'max:255',
             'salary'       => 'max:255',
@@ -32,7 +34,9 @@ class ProfileRequest extends FormRequest
             'smoke_flag'   => 'numeric',
             'alcohol_flag' => 'numeric',
             'introduce'    => 'max:255',
-            'image_path'   => 'max:255'
+            'image_path'   => 'max:255',
+            'mail_text'    => 'max:255',
+
         ];
     }
 }

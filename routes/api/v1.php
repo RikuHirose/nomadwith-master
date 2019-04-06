@@ -21,9 +21,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
               function () {
                   Route::get('/', 'ProfileController@index')->name('index');
                   Route::get('/{profile}', 'ProfileController@show')->name('show');
-
                   // Route::get('{profile}', 'ProfileController@create')->name('create')->middleware('auth');
                   Route::put('/{profile}', 'ProfileController@update')->name('update')->middleware('auth');
+
+                  Route::post('/{profile}/contact', 'ProfileController@contact');
             });
         });
 

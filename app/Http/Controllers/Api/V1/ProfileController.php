@@ -3,9 +3,12 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ProfileRequest;
-use App\Models\Profile;
+use Illuminate\Support\Facades\Mail;
 
+use App\Http\Requests\ProfileRequest;
+use App\Mail\CotactMail;
+
+use App\Models\Profile;
 use App\Repositories\ProfileRepositoryInterface;
 
 class ProfileController extends Controller
@@ -23,7 +26,6 @@ class ProfileController extends Controller
     public function index()
     {
       $profiles = $this->profileRepository->getAllProfile();
-      dd($profiles);
 
       return response()->json(['profiles' => $profiles]);
     }
@@ -42,5 +44,15 @@ class ProfileController extends Controller
       $profile->load('user');
 
       return response()->json(['profile' => $profile]);
+    }
+
+    public function contact(ProfileRequest $request, Profile $profile)
+    {
+
+       // Mail::to($request->email)
+       Mail::to('rikuparkour9+2@gmail.com')
+            ->send(new \App\Mail\ContactMail($request->all()));
+
+        return response()->json(['profile' => $profile]);
     }
 }

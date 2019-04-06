@@ -15,6 +15,15 @@ export default {
 
   props: ['showHeader'],
 
+  data () {
+    return {
+    }
+  },
+
+  created () {
+
+  },
+
   components: { Header }
 }
 </script>
