@@ -24,6 +24,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
                   // Route::get('{profile}', 'ProfileController@create')->name('create')->middleware('auth');
                   Route::put('/{profile}', 'ProfileController@update')->name('update')->middleware('auth');
 
+                  Route::post('/search', 'ProfileController@search');
                   Route::post('/{profile}/contact', 'ProfileController@contact');
             });
         });

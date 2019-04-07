@@ -26,6 +26,7 @@ class ProfileController extends Controller
     public function index()
     {
       $profiles = $this->profileRepository->getAllProfile();
+      $profiles->load('user');
 
       return response()->json(['profiles' => $profiles]);
     }
@@ -44,6 +45,28 @@ class ProfileController extends Controller
       $profile->load('user');
 
       return response()->json(['profile' => $profile]);
+    }
+
+    public function search(ProfileRequest $request)
+    {
+      $data = $request->all();
+      $profiles = $this->profileRepository->searchProfiles($data);
+
+      // if(!is_null($data['data'][0]['profile_name'])) {
+      //   $profile_name = $data['data'][0]['profile_name'];
+
+      //   // $profiles->load(['user' => function($query, $profile_name) {
+      //   //   $query->where('name', 'like', "%{$profile_name}%");
+      //   // }])->get();
+      //   $profiles->load(['user' => function ($query) use ($profile_name) {
+      //       $query->where('name', 'like', '%{$profile_name}%');
+      //   }]);
+
+      // }
+         $profiles->load('user');
+
+
+        return response()->json(['profiles' => $profiles]);
     }
 
     public function contact(ProfileRequest $request, Profile $profile)

@@ -10,6 +10,7 @@ export default {
     isLoggedIn: !!user,
     loading: false,
     auth_error: null,
+    profiles: [],
     profile: [],
   },
 
@@ -24,6 +25,10 @@ export default {
       return state.entries[0].date
     },
 
+    profiles (state) {
+      return state.profiles
+    },
+
     profile (state) {
       return state.profile
     },
@@ -31,6 +36,10 @@ export default {
   },
 
   mutations: {
+    updateProfiles (state, payload) {
+      state.profiles = payload
+    },
+
     updateProfile (state, payload) {
       state.profile = payload
     },
@@ -44,11 +53,35 @@ export default {
 
   actions: {
 
-    getProfiles ({ commit }, {profileId}) {
+    getProfile ({ commit }, {profileId}) {
       axios
         .get(`/api/v1/profiles/${profileId}`)
         .then((response) => {
           commit('updateProfile', response.data.profile || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
+    },
+
+    getProfiles ({ commit }) {
+      axios
+        .get(`/api/v1/profiles/`)
+        .then((response) => {
+          commit('updateProfiles', response.data.profiles || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
+    },
+
+    searchProfiles ({ commit }, {data}) {
+      axios
+        .post(`/api/v1/profiles/search`,{
+          data: data
+        })
+        .then((response) => {
+          commit('updateProfiles', response.data.profiles || [])
         })
         .catch((err) => {
           alert(err)

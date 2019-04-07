@@ -87,7 +87,7 @@ export default {
 
   methods: {
     fetch () {
-      this.$store.dispatch('getProfiles', {profileId: this.$route.params.id})
+      this.$store.dispatch('getProfile', {profileId: this.$route.params.id})
     },
     // sendContact (profileId) {
     //   axios

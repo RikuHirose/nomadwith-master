@@ -1,7 +1,7 @@
 <template>
     <transition name="modal">
-        <div class="overlay" @click="$emit('close')">
-            <div class="panel" @click.stop>
+        <div class="overlay m-modal" @click="$emit('close')">
+            <div class="m-modal__panel" @click.stop>
                 <h3>Modals</h3>
                 <form>
                     <div class="form-group">
@@ -67,18 +67,19 @@ export default {
     z-index: 900;
     transition: all .5s ease;
 }
- 
-.panel {
-    width: 300px;
-    height: 200px;
-    background: #fff;
-    padding: 20px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -150px;
-    margin-top: -100px;
-    transition: all .3s ease;
+.m-modal {
+    &__panel {
+        width: 300px;
+        height: 200px;
+        background: #fff;
+        padding: 20px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -150px;
+        margin-top: -100px;
+        transition: all .3s ease;
+    }
 }
 .modal-enter,
 .modal-leave-active {

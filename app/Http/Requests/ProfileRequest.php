@@ -36,6 +36,7 @@ class ProfileRequest extends FormRequest
             'introduce'    => 'max:255',
             'image_path'   => 'max:255',
             'mail_text'    => 'max:255',
+            'profile_name' => 'max:255',
 
         ];
     }
