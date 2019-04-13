@@ -17,11 +17,13 @@ class ContactMail extends Mailable
      */
     // 引数で受け取ったデータ用の変数
     protected $contact;
+    protected $to_email;
 
-    public function __construct($contact)
+    public function __construct($contact, $to_email)
     {
       // 引数で受け取ったデータを変数にセット
       $this->contact = $contact;
+      $this->to_email = $to_email;
     }
 
     /**
@@ -31,9 +33,9 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->from('rikuparkour9@gmail.com') // 送信元
-          ->subject('テスト送信') // メールタイトル
+        return $this->from($this->contact['from_email']) // 送信元
+          ->subject(env('APP_NAME').' - メッセージが届きました') // メールタイトル
           ->view('mail') // どのテンプレートを呼び出すか
-          ->with(['contact' => $this->contact]); // withオプションでセットしたデータをテンプレートへ受け渡す
+          ->with(['contact' => $this->contact, 'to_mail' => $this->to_email]); // withオプションでセットしたデータをテンプレートへ受け渡す
     }
 }

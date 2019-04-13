@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 
 use Socialite;
+use App\Models\User;
+use App\Models\Profile;
 
 class SocialController extends Controller
 {
@@ -36,27 +38,37 @@ class SocialController extends Controller
     public function handleFacebookProviderCallback()
     {
         try{
-            $user = Socialite::driver('facebook')->user();
+            $facebookUser = Socialite::driver('facebook')->user();
 
-            if($user){
-                dd($user);
-                // OAuth Two Providers
-                $token = $user->token;
-                $refreshToken = $user->refreshToken; // not always provided
-                $expiresIn = $user->expiresIn;
-
-                // All Providers
-                $user->getId();
-                $user->getNickname();
-                $user->getName();
-                $user->getEmail();
-                $user->getAvatar();
-
-            }
-        }catch(Exception $e){
+        } catch(Exception $e){
             return redirect("/");
         }
 
-        // $user->token;
+        //すでに登録済みかチェック
+        $socialProvider = User::where('facebook_id',$facebookUser->getId())->first();
+
+        if(!$socialProvider) {
+
+            $user = User::firstOrCreate(
+                ['email' => $facebookUser->getEmail(), 'facebook_id' => $facebookUser->getId()]
+            );
+
+            $profile = Profile::firstOrCreate(
+                ['user_id' => $user->id,'name' => $facebookUser->getName(),'img_url' => $facebookUser->avatar_original]
+            );
+
+        } else {
+            // $user = User::firstOrCreate(
+            //     ['email' => $user->getEmail(), 'name' => $user->getName(), 'facebook_id' => $user->getId()]
+            // );
+            $user = User::where(
+                ['email' => $facebookUser->getEmail(), 'facebook_id' => $facebookUser->getId()]
+            )->first();
+        }
+
+        auth()->login($user);
+
+      return redirect('/');
     }
+
 }

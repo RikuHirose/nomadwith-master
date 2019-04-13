@@ -22,12 +22,17 @@
 export default {
     name: 'contact',
 
-    props: ['profileId'],
+    props: ['profileId', 'toEmail'],
 
     data () {
         return {
             text: ''
         }
+    },
+    computed: {
+        currentUser() {
+          return this.$store.getters.currentUser
+        },
     },
     methods: {
         sendContact () {
@@ -37,6 +42,7 @@ export default {
 
           formData.append('mail_text',      this.text)
           formData.append('profile_id', this.profileId)
+          formData.append('from_email', this.currentUser.email)
 
           axios.post(url, formData)
             .then(response => {

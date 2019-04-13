@@ -4,7 +4,6 @@
 Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function() {
     Route::group(['prefix' => 'v1', 'as' => 'v1.', 'namespace' => 'V1'], function() {
 
-
       Route::group(['prefix' => 'auth'], function ($router) {
 
           Route::post('login', 'AuthController@login');
@@ -22,7 +21,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
                   Route::get('/', 'ProfileController@index')->name('index');
                   Route::get('/{profile}', 'ProfileController@show')->name('show');
                   // Route::get('{profile}', 'ProfileController@create')->name('create')->middleware('auth');
-                  Route::put('/{profile}', 'ProfileController@update')->name('update')->middleware('auth');
+                  Route::put('/{profile}', 'ProfileController@update')->name('update');
 
                   Route::post('/search', 'ProfileController@search');
                   Route::post('/{profile}/contact', 'ProfileController@contact');
@@ -35,3 +34,5 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
 
 
 /* %%ROUTES%% */
+Route::get('auth/login/facebook', 'Auth\SocialController@redirectToFacebookProvider');
+Route::get('auth/facebook/callback', 'Auth\SocialController@handleFacebookProviderCallback');

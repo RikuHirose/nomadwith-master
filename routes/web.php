@@ -24,9 +24,13 @@ Auth::routes();
 
 // Route::get('/', 'HomeController@index');
 
-Route::get('auth/login', 'Auth\SocialController@viewLogin');
-Route::get('auth/login/facebook', 'Auth\SocialController@redirectToFacebookProvider');
-Route::get('auth/facebook/callback', 'Auth\SocialController@handleFacebookProviderCallback');
+Route::group(['middleware' => ['guest']], function () {
+  Route::get('auth/login', 'Auth\SocialController@viewLogin');
+  Route::get('auth/login/facebook', 'Auth\SocialController@redirectToFacebookProvider');
+  Route::get('auth/facebook/callback', 'Auth\SocialController@handleFacebookProviderCallback');
+});
+
+
 
 
 // Route::group(['prefix' => 'profiles', 'as' => 'profiles.'],

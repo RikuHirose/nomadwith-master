@@ -44,7 +44,7 @@ class ProfileRepository implements ProfileRepositoryInterface
 
         if(!is_null($data['data'][0]['profile_name'])) {
             $profile_name  = $data['data'][0]['profile_name'];
-
+            // 最適解ではない??
             $profiles = $profiles->whereHas('user', function($query) use ($profile_name) {
                 return $query->where('name', 'like', "%{$profile_name}%");
             });

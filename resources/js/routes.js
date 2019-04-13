@@ -3,6 +3,8 @@ import Container from './components/Container.vue'
 import Top from './components/Top.vue'
 import Profile from './components/profiles/profile.vue'
 import Contact from './components/profiles/contact/contact.vue'
+import Mypage from './components/mypage/show.vue'
+
 
 export const routes = [
   {
@@ -29,10 +31,10 @@ export const routes = [
           },
         ]
       },
-      // {
-      //   path: 'factories/:id',
-      //   component: Factory
-      // }
+      {
+        path: 'mypage',
+        component: Mypage
+      }
     ]
   }
 ]

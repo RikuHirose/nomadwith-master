@@ -11,6 +11,8 @@ class Profile extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
+        'img_url',
         'address',
         'job',
         'salary',
@@ -18,7 +20,6 @@ class Profile extends Model
         'smoke_flag',
         'alcohol_flag',
         'introduce',
-        'image_path'
     ];
 
 

@@ -86,7 +86,6 @@ export default {
 
   methods: {
     fetch () {
-
       this.$store.dispatch('searchProfiles', {data: [{
         smoke_flag: this.smoke_flag,
         nomad_flag: this.nomad_flag,
@@ -96,7 +95,7 @@ export default {
     resetInput() {
       this.smoke_flag = ''
       this.nomad_flag = ''
-      this.profile_name = []
+      this.profile_name = ''
     }
 
   },

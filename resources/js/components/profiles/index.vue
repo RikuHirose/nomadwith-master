@@ -8,9 +8,9 @@
       class="col-md-4 col-sm-6 col-xs-12">
         <div
         class="card">
-          <img class="card-img-top" src="https://pbs.twimg.com/profile_images/1086579114029461505/qrD4Sdco_400x400.jpg" alt="Card image cap">
+          <img class="card-img-top" :src="profile.img_url" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">{{ profile.user.name }}</h5>
+            <h5 class="card-title">{{ profile.name }}</h5>
             <table class="table">
               <tbody>
                 <tr>

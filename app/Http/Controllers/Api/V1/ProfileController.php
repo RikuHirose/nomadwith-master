@@ -39,8 +39,6 @@ class ProfileController extends Controller
 
     public function update(Profile $profile, ProfileRequest $request)
     {
-
-      // $profile->fill($request->all())->update();
       $profile->fill($request->all())->save();
       $profile->load('user');
 
@@ -50,31 +48,19 @@ class ProfileController extends Controller
     public function search(ProfileRequest $request)
     {
       $data = $request->all();
+
       $profiles = $this->profileRepository->searchProfiles($data);
+      $profiles->load('user');
 
-      // if(!is_null($data['data'][0]['profile_name'])) {
-      //   $profile_name = $data['data'][0]['profile_name'];
-
-      //   // $profiles->load(['user' => function($query, $profile_name) {
-      //   //   $query->where('name', 'like', "%{$profile_name}%");
-      //   // }])->get();
-      //   $profiles->load(['user' => function ($query) use ($profile_name) {
-      //       $query->where('name', 'like', '%{$profile_name}%');
-      //   }]);
-
-      // }
-         $profiles->load('user');
-
-
-        return response()->json(['profiles' => $profiles]);
+      return response()->json(['profiles' => $profiles]);
     }
 
     public function contact(ProfileRequest $request, Profile $profile)
     {
-
-       // Mail::to($request->email)
-       Mail::to('rikuparkour9+2@gmail.com')
-            ->send(new \App\Mail\ContactMail($request->all()));
+      $profile->load('user');
+      $to_email = $profile->user->email;
+       Mail::to($to_email)
+            ->send(new \App\Mail\ContactMail($request->all(), $to_email));
 
         return response()->json(['profile' => $profile]);
     }

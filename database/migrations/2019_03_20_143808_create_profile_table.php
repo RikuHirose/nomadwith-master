@@ -17,6 +17,8 @@ class CreateProfileTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->index();
 
+            $table->string('name')->nullable();
+            $table->string('img_url')->nullable();
             $table->string('address')->nullable();
             $table->string('job')->nullable();
             $table->string('salary')->nullable();
@@ -26,7 +28,6 @@ class CreateProfileTable extends Migration
             $table->string('alcohol_flag')->nullable();
 
             $table->longText('introduce')->nullable();
-            $table->string('image_path')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

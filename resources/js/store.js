@@ -52,7 +52,6 @@ export default {
   },
 
   actions: {
-
     getProfile ({ commit }, {profileId}) {
       axios
         .get(`/api/v1/profiles/${profileId}`)
@@ -87,17 +86,39 @@ export default {
           alert(err)
         })
     },
+    updateProfile ({ commit }, {data}) {
+      axios
+        .put(`/api/v1/profiles/${data[0].id}`,{
+          id: data[0].id,
+          name: data[0].name,
+          introduce: data[0].introduce,
+          address: data[0].address,
+          job: data[0].job,
+          salary: data[0].salary,
+          nomad_flag: data[0].nomad_flag,
+          smoke_flag: data[0].smoke_flag,
+          alcohol_flag: data[0].alcohol_flag,
+        })
+        .then((response) => {
+          commit('updateProfile', response.data.profile || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
+    },
+    login ({ commit }) {
+      axios
+        .get('/auth/login/facebook', {})
+        .then((response) => {
 
-    clearParameters ({ commit }) {
-      commit('updateMachine', [])
-      commit('updateParameters', [])
+        })
     },
 
     logout ({ commit }) {
       axios
-        .post('/signout', {})
+        .post('/logout', {})
         .then((response) => {
-          window.location.href = '/signin'
+          window.location.href = '/'
         })
     }
   },

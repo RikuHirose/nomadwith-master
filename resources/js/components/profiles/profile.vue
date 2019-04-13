@@ -1,10 +1,9 @@
 <template>
-
   <div class="mt-3">
     <div class="container">
       <div class="text-center mb-3">
-        <img src="https://pbs.twimg.com/profile_images/1086579114029461505/qrD4Sdco_400x400.jpg" class="rounded-circle" style="width: 150px; height: 150px;">
-        <p class="mt-3 mb-3">{{ profile.user.name }}</p>
+        <img :src="profile.img_url" class="rounded-circle" style="width: 150px; height: 150px;">
+        <p class="mt-3 mb-3">{{ profile.name }}</p>
       </div>
 
       <div class="w-75 mx-auto text-center">

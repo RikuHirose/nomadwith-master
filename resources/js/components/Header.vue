@@ -9,17 +9,18 @@
         <ul class="navbar-nav ml-auto">
           <template v-if="!currentUser">
               <li>
-                <router-link to="/signin" class="nav-link">Login</router-link>
+                <a href="/auth/login/facebook" class="dropdown-item">FaceBookでLogin</a>
               </li>
           </template>
           <template v-else>
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                    {{ currentUser.name }} <span class="caret"></span>
+                    {{ profile.name }} <span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a href="/signout" @click.prevent="logout" class="dropdown-item">Logout</a>
+                    <router-link :to="`/mypage`" class="dropdown-item">プロフィール設定</router-link>
+                    <a @click.prevent="logout" class="dropdown-item">Logout</a>
                 </div>
             </li>
           </template>
@@ -44,6 +45,9 @@ export default {
   computed: {
     currentUser() {
       return this.$store.getters.currentUser
+    },
+    profile() {
+      return this.$store.getters.currentUser.profile
     }
   }
 }

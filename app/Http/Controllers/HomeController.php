@@ -24,7 +24,9 @@ class HomeController extends Controller
     public function index()
     {
         $user = \Auth::user();
-
+        if (isset($user)) {
+            $user->load('profile');
+        }
         return view('home', [
             'user' => $user
         ]);
