@@ -5,6 +5,8 @@ import Profile from './components/profiles/profile.vue'
 import Contact from './components/profiles/contact/contact.vue'
 import Mypage from './components/mypage/show.vue'
 
+import Chat from './components/chat/index.vue'
+
 
 export const routes = [
   {
@@ -34,6 +36,10 @@ export const routes = [
       {
         path: 'mypage',
         component: Mypage
+      },
+      {
+        path: 'chat',
+        component: Chat
       }
     ]
   }

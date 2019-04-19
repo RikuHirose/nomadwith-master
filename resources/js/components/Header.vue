@@ -13,6 +13,11 @@
               </li>
           </template>
           <template v-else>
+            <li class="nav-item">
+              <a href="/chat">
+                <i class="fas fa-comment"></i>
+              </a>
+            </li>
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                     {{ profile.name }} <span class="caret"></span>
