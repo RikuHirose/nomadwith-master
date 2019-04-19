@@ -18,12 +18,12 @@ class Match extends Model
     ];
 
     // Relations
-    public function user()
+    public function requestUser()
     {
       return $this->belongsTo(\App\Models\User::class, 'request_user_id', 'id');
     }
 
-    public function user()
+    public function targetUser()
     {
       return $this->belongsTo(\App\Models\User::class, 'target_user_id', 'id');
     }
