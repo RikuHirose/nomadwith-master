@@ -24,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ProfileRepositoryInterface::class,
             \App\Repositories\Eloquent\ProfileRepository::class
         );
+
+        // Match
+        $this->app->bind(
+            \App\Repositories\MatchRepositoryInterface::class,
+            \App\Repositories\Eloquent\MatchRepository::class
+        );
     }
 
     /**

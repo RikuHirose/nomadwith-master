@@ -18,7 +18,7 @@ class CreateMatchesTable extends Migration
 
             $table->bigInteger('request_user_id')->unsigned()->index();
             $table->bigInteger('target_user_id')->unsigned()->index();
-            $table->string('matched_flag')->nullable();
+            $table->boolean('matched_flag')->nullable();
 
             $table->foreign('request_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('target_user_id')->references('id')->on('users')->onDelete('cascade');

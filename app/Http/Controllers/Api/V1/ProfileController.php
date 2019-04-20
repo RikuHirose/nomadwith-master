@@ -64,4 +64,5 @@ class ProfileController extends Controller
 
         return response()->json(['profile' => $profile]);
     }
+
 }

@@ -10,6 +10,12 @@
         <p class="mt-3 mb-3">{{ profile.introduce }}</p>
       </div>
 
+      <div class="w-75 mx-auto text-center">
+        <p class="mt-3 mb-3">
+          <button type="button" class="btn btn-primary btn-lg" @click="postLike()">Large button</button>
+        </p>
+      </div>
+
       <table class="table">
         <tbody>
           <tr>
@@ -42,6 +48,12 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="w-75 mx-auto text-center">
+        <p class="mt-3 mb-3">
+          <button type="button" class="btn btn-primary btn-lg">Large button</button>
+        </p>
+      </div>
     </div>
     <button @click="showModal = true">モーダル表示</button>
     <contact
@@ -88,16 +100,19 @@ export default {
     fetch () {
       this.$store.dispatch('getProfile', {profileId: this.$route.params.id})
     },
-    // sendContact (profileId) {
-    //   axios
-    //     .post(`/api/v1/profiles/${profileId}/contact`)
-    //     .then((response) => {
-          
-    //     })
-    //     .catch((err) => {
-    //       alert(err)
-    //     })
-    // }
+    postLike () {
+      axios
+        .post(`/api/v1/profiles/${this.$route.params.id}/like`, {
+          request_user_id: this.currentUser.id,
+          target_user_id: this.profile.user_id,
+        })
+        .then((response) => {
+
+        })
+        .catch((err) => {
+          alert(err)
+        })
+    }
   },
 }
 </script>

@@ -19,12 +19,6 @@ export default {
       return state.currentUser
     },
 
-    updatedTime (state) {
-      // 全データ同じタイミングで更新されるため、更新日時は一つ目のエントリーから判断でok
-      if (state.entries.length === 0) { return null }
-      return state.entries[0].date
-    },
-
     profiles (state) {
       return state.profiles
     },

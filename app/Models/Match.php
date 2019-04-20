@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,10 @@ class Match extends Model
         'request_user_id',
         'target_user_id',
         'matched_flag',
+    ];
+
+    protected $casts = [
+        'matched_flag' => 'boolean'
     ];
 
     // Relations

@@ -2070,7 +2070,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _chatMessages_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./chatMessages.vue */ "./resources/js/components/chat/chatMessages.vue");
+/* harmony import */ var _chatMessages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chatMessages.vue */ "./resources/js/components/chat/chatMessages.vue");
 /* harmony import */ var _chatForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chatForm.vue */ "./resources/js/components/chat/chatForm.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -2105,7 +2105,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
   name: 'mypage',
   components: {
-    'chatMessages': _chatMessages_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    'chatMessages': _chatMessages_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'chatForm': _chatForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
@@ -2484,6 +2484,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2511,6 +2523,14 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       this.$store.dispatch('getProfile', {
         profileId: this.$route.params.id
+      });
+    },
+    postLike: function postLike() {
+      axios.post("/api/v1/profiles/".concat(this.$route.params.id, "/like"), {
+        request_user_id: this.currentUser.id,
+        target_user_id: this.profile.user_id
+      }).then(function (response) {}).catch(function (err) {
+        alert(err);
       });
     }
   }
@@ -39564,6 +39584,24 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "w-75 mx-auto text-center" }, [
+          _c("p", { staticClass: "mt-3 mb-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-lg",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.postLike()
+                  }
+                }
+              },
+              [_vm._v("Large button")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
         _c("table", { staticClass: "table" }, [
           _c("tbody", [
             _c("tr", [
@@ -39624,7 +39662,9 @@ var render = function() {
                 : _vm._e()
             ])
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
       ]),
       _vm._v(" "),
       _c(
@@ -39653,7 +39693,22 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-75 mx-auto text-center" }, [
+      _c("p", { staticClass: "mt-3 mb-3" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary btn-lg", attrs: { type: "button" } },
+          [_vm._v("Large button")]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -56854,14 +56909,6 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
   getters: {
     currentUser: function currentUser(state) {
       return state.currentUser;
-    },
-    updatedTime: function updatedTime(state) {
-      // 全データ同じタイミングで更新されるため、更新日時は一つ目のエントリーから判断でok
-      if (state.entries.length === 0) {
-        return null;
-      }
-
-      return state.entries[0].date;
     },
     profiles: function profiles(state) {
       return state.profiles;
