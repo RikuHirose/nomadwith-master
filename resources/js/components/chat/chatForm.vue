@@ -32,13 +32,13 @@
         if(!this.body || this.body.trim() === '') {
             return
         }
-        let messageObj = this.buildMessage();
-        Event.$emit('added_message', messageObj);
-        axios.post('/message', {
-            body: this.body.trim()
-        }).catch(() => {
-            console.log('failed');
-        });
+        // let messageObj = this.buildMessage();
+        // Event.$emit('added_message', messageObj);
+
+        this.$store.dispatch('sendMessages', {
+          currentUser: this.currentUser,
+          body: this.body.trim()
+        })
         this.body = null;
       },
       buildMessage() {

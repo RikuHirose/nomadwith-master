@@ -17,6 +17,7 @@
               <div class="card-body">
                   <chat-messages></chat-messages>
                   <chat-form></chat-form>
+                  <chat></chat>
               </div>
           </div>
       </div>
@@ -27,12 +28,14 @@
 <script>
 import chatMessages from './chatMessages.vue'
 import chatForm from './chatForm.vue'
+import chat from './chat.vue'
 
 export default {
   name: 'chat-index',
   components: {
     'chatMessages': chatMessages,
     'chatForm': chatForm,
+    'chat': chat
   },
   data (){
     return {

@@ -13,6 +13,7 @@ export default {
     profiles: [],
     profile: [],
     matchedUsers: [],
+    messages: [],
   },
 
   getters: {
@@ -32,6 +33,10 @@ export default {
       return state.matchedUsers
     },
 
+    messages (state) {
+      return state.messages
+    },
+
   },
 
   mutations: {
@@ -45,6 +50,10 @@ export default {
 
     updateMatchedUsers (state, payload) {
       state.matchedUsers = payload
+    },
+
+    updateMessages (state, payload) {
+      state.messages = payload
     },
 
     logout (state) {
@@ -120,6 +129,32 @@ export default {
         .catch((err) => {
           alert(err)
         })
+    },
+    getMessages ({ commit }, {currentUser}) {
+      // axios
+      //   .post(`/api/v1/matches/users`,{
+      //     currentUser: currentUser
+      //   })
+      //   .then((response) => {
+      //     commit('updateMatchedUsers', response.data.matchedUsers || [])
+      //   })
+      //   .catch((err) => {
+      //     alert(err)
+      //   })
+      commit('updateMessages', [{ body: 'hi!' }])
+    },
+    sendMessages ({ commit }, {currentUser, body}) {
+      // axios
+      //   .post(`/api/v1/matches/users`,{
+      //     currentUser: currentUser
+      //   })
+      //   .then((response) => {
+      //     commit('updateMatchedUsers', response.data.matchedUsers || [])
+      //   })
+      //   .catch((err) => {
+      //     alert(err)
+      //   })
+      commit('updateMessages', [{ body: body }])
     },
     login ({ commit }) {
       axios
