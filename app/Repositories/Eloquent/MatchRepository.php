@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 use App\Repositories\MatchRepositoryInterface;
 use App\Models\Match;
+use App\Models\User;
 
 class MatchRepository implements MatchRepositoryInterface
 {
@@ -102,5 +103,50 @@ class MatchRepository implements MatchRepositoryInterface
 
         }
 
+    }
+
+    public function matchedUsers($currentUserId)
+    {
+        $matchedUsers = $this->match
+        ->where([
+            'request_user_id' => $currentUserId,
+            'matched_flag'    => true
+        ])
+        ->orWhere([
+            'target_user_id'  => $currentUserId,
+            'matched_flag'    => true
+        ])
+        ->get();
+
+        // current userではないuserのみを取得したい
+        $collection = collect();
+        foreach ($matchedUsers as $key => $value) {
+
+            if ($value->request_user_id !== $currentUserId) {
+
+                $filtered = collect([
+                    'id' => $value->id,
+                    'user_id' => $value->request_user_id,
+                ]);
+                $collection->push($filtered);
+
+            } elseif ($value->target_user_id !== $currentUserId) {
+
+                $filtered = collect([
+                    'id' => $value->id,
+                    'user_id' => $value->target_user_id,
+                ]);
+                $collection->push($filtered);
+            }
+        }
+
+        $filterMatchedUsers = collect();
+        foreach ($collection as $key => $value) {
+            $user = User::where('id', $value['user_id'])->first();
+
+            $filterMatchedUsers->push($user);
+        }
+
+        return $filterMatchedUsers;
     }
 }

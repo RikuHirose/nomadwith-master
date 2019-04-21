@@ -2088,8 +2088,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chatMessages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chatMessages.vue */ "./resources/js/components/chat/chatMessages.vue");
 /* harmony import */ var _chatForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chatForm.vue */ "./resources/js/components/chat/chatForm.vue");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2118,8 +2116,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
-  name: 'mypage',
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'chat-index',
   components: {
     'chatMessages': _chatMessages_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'chatForm': _chatForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -2131,17 +2129,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.profileName = this.profile.name;
+    this.fetchMatchedUsers();
   },
-  methods: {},
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
     },
     profile: function profile() {
       return this.$store.getters.currentUser.profile;
+    },
+    matchedUsers: function matchedUsers() {
+      return this.$store.getters.matchedUsers;
+    }
+  },
+  methods: {
+    fetchMatchedUsers: function fetchMatchedUsers() {
+      this.$store.dispatch('matchedUsers', {
+        currentUser: this.currentUser
+      });
     }
   }
-}, "methods", {}));
+});
 
 /***/ }),
 
@@ -38990,7 +38998,7 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-4" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Users")]),
+          _c("div", { staticClass: "card-header" }, [_vm._v("Matched Users")]),
           _vm._v(" "),
           _c(
             "div",
@@ -56969,7 +56977,8 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
     loading: false,
     auth_error: null,
     profiles: [],
-    profile: []
+    profile: [],
+    matchedUsers: []
   },
   getters: {
     currentUser: function currentUser(state) {
@@ -56980,6 +56989,9 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
     },
     profile: function profile(state) {
       return state.profile;
+    },
+    matchedUsers: function matchedUsers(state) {
+      return state.matchedUsers;
     }
   },
   mutations: {
@@ -56988,6 +57000,9 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
     },
     updateProfile: function updateProfile(state, payload) {
       state.profile = payload;
+    },
+    updateMatchedUsers: function updateMatchedUsers(state, payload) {
+      state.matchedUsers = payload;
     },
     logout: function logout(state) {
       localStorage.removeItem('user');
@@ -57043,12 +57058,23 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
         alert(err);
       });
     },
-    login: function login(_ref8) {
+    matchedUsers: function matchedUsers(_ref8, _ref9) {
       var commit = _ref8.commit;
+      var currentUser = _ref9.currentUser;
+      axios.post("/api/v1/matches/users", {
+        currentUser: currentUser
+      }).then(function (response) {
+        commit('updateMatchedUsers', response.data.matchedUsers || []);
+      }).catch(function (err) {
+        alert(err);
+      });
+    },
+    login: function login(_ref10) {
+      var commit = _ref10.commit;
       axios.get('/auth/login/facebook', {}).then(function (response) {});
     },
-    logout: function logout(_ref9) {
-      var commit = _ref9.commit;
+    logout: function logout(_ref11) {
+      var commit = _ref11.commit;
       axios.post('/logout', {}).then(function (response) {
         window.location.href = '/';
       });

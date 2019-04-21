@@ -12,6 +12,7 @@ export default {
     auth_error: null,
     profiles: [],
     profile: [],
+    matchedUsers: [],
   },
 
   getters: {
@@ -27,6 +28,10 @@ export default {
       return state.profile
     },
 
+    matchedUsers (state) {
+      return state.matchedUsers
+    },
+
   },
 
   mutations: {
@@ -36,6 +41,10 @@ export default {
 
     updateProfile (state, payload) {
       state.profile = payload
+    },
+
+    updateMatchedUsers (state, payload) {
+      state.matchedUsers = payload
     },
 
     logout (state) {
@@ -95,6 +104,18 @@ export default {
         })
         .then((response) => {
           commit('updateProfile', response.data.profile || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
+    },
+    matchedUsers ({ commit }, {currentUser}) {
+      axios
+        .post(`/api/v1/matches/users`,{
+          currentUser: currentUser
+        })
+        .then((response) => {
+          commit('updateMatchedUsers', response.data.matchedUsers || [])
         })
         .catch((err) => {
           alert(err)

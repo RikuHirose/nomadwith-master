@@ -39,5 +39,12 @@ class MatchController extends Controller
         return response()->json(['responseMessage' => $responseMessage]);
     }
 
+    public function matchedUsers(Request $request)
+    {
+        $currentUser = $request->all();
 
+        $matchedUsers = $this->matchRepository->matchedUsers($currentUser['currentUser']['id']);
+
+        return response()->json(['matchedUsers' => $matchedUsers]);
+    }
 }

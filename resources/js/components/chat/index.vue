@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-4">
           <div class="card">
-              <div class="card-header">Users</div>
+              <div class="card-header">Matched Users</div>
               <div class="card-body">
                   <div class="users" v-for="user in users" :key="user.id">
                       <a href="#">{{ user.name }}</a>
@@ -29,7 +29,7 @@ import chatMessages from './chatMessages.vue'
 import chatForm from './chatForm.vue'
 
 export default {
-  name: 'mypage',
+  name: 'chat-index',
   components: {
     'chatMessages': chatMessages,
     'chatForm': chatForm,
@@ -39,25 +39,27 @@ export default {
       profileName: '',
     }
   },
-
   created () {
     this.profileName = this.profile.name
+    this.fetchMatchedUsers()
   },
-
-  methods: {
-
-  },
-
   computed: {
     currentUser() {
       return this.$store.getters.currentUser
     },
     profile() {
       return this.$store.getters.currentUser.profile
+    },
+    matchedUsers() {
+      return this.$store.getters.matchedUsers
     }
   },
   methods: {
-
+    fetchMatchedUsers () {
+      this.$store.dispatch('matchedUsers', {
+        currentUser: this.currentUser,
+      })
+    }
   }
 }
 </script>

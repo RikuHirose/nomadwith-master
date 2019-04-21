@@ -15,7 +15,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
 
       // Route::group(['middleware' => 'api.auth'], function() {
       Route::group([], function() {
-
         Route::group(['prefix' => 'profiles', 'as' => 'profiles.'],
           function () {
               Route::get('/', 'ProfileController@index')->name('index');
@@ -27,6 +26,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
               Route::post('/{profile}/contact', 'ProfileController@contact');
 
               Route::post('/{profile}/like', 'MatchController@like');
+        });
+        Route::group(['prefix' => 'matches', 'as' => 'matches.'],
+          function () {
+              Route::post('/users', 'MatchController@matchedUsers');
         });
       });
 
