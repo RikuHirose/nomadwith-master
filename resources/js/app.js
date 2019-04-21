@@ -4,6 +4,7 @@ require('./bootstrap')
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import VModal from 'vue-js-modal'
 import {routes} from './routes'
 import StoreData from './store'
 import MainApp from './components/MainApp.vue';
@@ -11,6 +12,7 @@ import MainApp from './components/MainApp.vue';
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(VModal, { dialog: true })
 
 const store = new Vuex.Store(StoreData)
 

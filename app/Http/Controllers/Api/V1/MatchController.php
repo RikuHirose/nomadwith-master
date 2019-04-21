@@ -34,10 +34,9 @@ class MatchController extends Controller
     {
         $profile->load('user');
         $data = $request->all();
-        $liked = $this->matchRepository->like($data);
-        dd($liked);
+        $responseMessage = $this->matchRepository->like($data);
 
-        return response()->json(['profile' => $profile]);
+        return response()->json(['responseMessage' => $responseMessage]);
     }
 
 

@@ -68,6 +68,7 @@
 
 <script>
 import contact from './contact/contact.vue'
+import Event from '../../event.js';
 
 export default {
   components: {
@@ -107,6 +108,7 @@ export default {
           target_user_id: this.profile.user_id,
         })
         .then((response) => {
+          Event.$emit('show-dialog', response.data.responseMessage)
 
         })
         .catch((err) => {

@@ -7,11 +7,27 @@
         </div>
       </div>
     </div>
+    <v-dialog/>
   </div>
 </template>
 
 <script>
+  import Event from '../event.js';
   export default {
-    name: 'container'
+    name: 'container',
+    mounted() {
+      Event.$on('show-dialog', (message) => {
+        this.$modal.show('dialog', {
+          title: 'Alert!',
+          text: message,
+          buttons: [
+            {
+              title: 'Close'
+            }
+          ]
+        })
+      })
+    }
   }
+
 </script>

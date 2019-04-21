@@ -73,6 +73,8 @@ class MatchRepository implements MatchRepositoryInterface
                 'matched_flag'    => false
             ])->save();
 
+             return $message = 'いいねしました';
+
         } else {
 
             $same_liked = $this->match
@@ -83,7 +85,7 @@ class MatchRepository implements MatchRepositoryInterface
             ->exists();
 
             if ($same_liked == true) {
-                return '';
+                return $message = 'すでにいいねしたユーザーにはいいねできません';
 
             } else {
                 $liked = $this->match
@@ -94,11 +96,11 @@ class MatchRepository implements MatchRepositoryInterface
                 ->first();
 
                 $liked = $liked->update(['matched_flag' => true]);
+
+                return $message = 'マッチしました';
             }
 
         }
-
-        return $liked;
 
     }
 }
