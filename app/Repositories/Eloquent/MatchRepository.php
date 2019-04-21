@@ -143,7 +143,7 @@ class MatchRepository implements MatchRepositoryInterface
         $filterMatchedUsers = collect();
         foreach ($collection as $key => $value) {
             $user = User::where('id', $value['user_id'])->first();
-
+            $user->load('profile');
             $filterMatchedUsers->push($user);
         }
 

@@ -2124,12 +2124,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      profileName: ''
+      profileName: '',
+      loading: false
     };
   },
   created: function created() {
     this.profileName = this.profile.name;
     this.fetchMatchedUsers();
+  },
+  beforeMount: function beforeMount() {
+    this.loading = true;
   },
   computed: {
     currentUser: function currentUser() {
@@ -38961,9 +38965,7 @@ var render = function() {
         "div",
         { staticClass: "message", class: { self: message.selfMessage } },
         [
-          _c("strong", { staticClass: "user" }, [
-            _vm._v(_vm._s(message.user.name))
-          ]),
+          _c("strong", { staticClass: "user" }),
           _vm._v(" "),
           _c("p", { staticClass: "body" }, [_vm._v(_vm._s(message.body))])
         ]
@@ -39003,9 +39005,13 @@ var render = function() {
           _c(
             "div",
             { staticClass: "card-body" },
-            _vm._l(_vm.users, function(user) {
-              return _c("div", { key: user.id, staticClass: "users" }, [
-                _c("a", { attrs: { href: "#" } }, [_vm._v(_vm._s(user.name))])
+            _vm._l(this.matchedUsers, function(user) {
+              return _c("div", { staticClass: "users" }, [
+                !_vm.loading
+                  ? _c("a", { attrs: { href: "#" } }, [
+                      _vm._v(_vm._s(user.profile.name))
+                    ])
+                  : _vm._e()
               ])
             }),
             0

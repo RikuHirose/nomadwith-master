@@ -4,7 +4,7 @@
         v-for="message in messages"
         class="message"
         :class="{ 'self': message.selfMessage }">
-        <strong class="user">{{ message.user.name }}</strong>
+        <strong class="user"></strong>
         <p class="body">{{ message.body }}</p>
       </div>
   </div>

@@ -5,8 +5,8 @@
           <div class="card">
               <div class="card-header">Matched Users</div>
               <div class="card-body">
-                  <div class="users" v-for="user in users" :key="user.id">
-                      <a href="#">{{ user.name }}</a>
+                  <div class="users" v-for="user in this.matchedUsers">
+                      <a href="#" v-if="loading">{{ user.profile.name }}</a>
                   </div>
               </div>
           </div>
@@ -37,11 +37,15 @@ export default {
   data (){
     return {
       profileName: '',
+      loading: false
     }
   },
   created () {
     this.profileName = this.profile.name
     this.fetchMatchedUsers()
+  },
+  beforeMount() {
+    this.loading = true
   },
   computed: {
     currentUser() {

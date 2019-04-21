@@ -42,7 +42,6 @@ class MatchController extends Controller
     public function matchedUsers(Request $request)
     {
         $currentUser = $request->all();
-
         $matchedUsers = $this->matchRepository->matchedUsers($currentUser['currentUser']['id']);
 
         return response()->json(['matchedUsers' => $matchedUsers]);
