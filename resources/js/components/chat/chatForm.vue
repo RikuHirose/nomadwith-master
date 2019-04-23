@@ -1,12 +1,12 @@
 <template>
   <form class="form">
       <textarea
-          id="body"
-          cols="28"
-          rows="5"
-          class="form-input"
-          @keydown="typing"
-          v-model="body">
+        id="body"
+        cols="28"
+        rows="5"
+        class="form-input"
+        @keydown="typing"
+        v-model="message">
       </textarea>
       <span class="notice">
           Hit Return to send a message
@@ -18,7 +18,12 @@
   export default {
     data() {
       return {
-          body: null
+          message: null
+      }
+    },
+    computed: {
+      currentUser() {
+        return this.$store.getters.currentUser
       }
     },
     methods: {
@@ -29,22 +34,23 @@
         }
       },
       sendMessage() {
-        if(!this.body || this.body.trim() === '') {
+        if(!this.message || this.message.trim() === '') {
             return
         }
         // let messageObj = this.buildMessage();
         // Event.$emit('added_message', messageObj);
 
-        this.$store.dispatch('sendMessages', {
+        this.$store.dispatch('sendMessage', {
           currentUser: this.currentUser,
-          body: this.body.trim()
+          matchId: this.$route.params.id,
+          message: this.message.trim()
         })
-        this.body = null;
+        this.message = null;
       },
       buildMessage() {
         return {
           id: Date.now(),
-          body: this.body,
+          message: this.message,
           selfMessage: true,
           user: {
               name: ''

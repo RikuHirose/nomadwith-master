@@ -6418,8 +6418,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      body: null
+      message: null
     };
+  },
+  computed: {
+    currentUser: function currentUser() {
+      return this.$store.getters.currentUser;
+    }
   },
   methods: {
     typing: function typing(e) {
@@ -6429,22 +6434,23 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     sendMessage: function sendMessage() {
-      if (!this.body || this.body.trim() === '') {
+      if (!this.message || this.message.trim() === '') {
         return;
       } // let messageObj = this.buildMessage();
       // Event.$emit('added_message', messageObj);
 
 
-      this.$store.dispatch('sendMessages', {
+      this.$store.dispatch('sendMessage', {
         currentUser: this.currentUser,
-        body: this.body.trim()
+        matchId: this.$route.params.id,
+        message: this.message.trim()
       });
-      this.body = null;
+      this.message = null;
     },
     buildMessage: function buildMessage() {
       return {
         id: Date.now(),
-        body: this.body,
+        message: this.message,
         selfMessage: true,
         user: {
           name: ''
@@ -6569,12 +6575,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      profileName: '',
       loading: false
     };
   },
   created: function created() {
-    this.profileName = this.profile.name;
     this.fetchMatchedUsers();
     this.loading = true;
   },
@@ -58649,20 +58653,20 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.body,
-          expression: "body"
+          value: _vm.message,
+          expression: "message"
         }
       ],
       staticClass: "form-input",
       attrs: { id: "body", cols: "28", rows: "5" },
-      domProps: { value: _vm.body },
+      domProps: { value: _vm.message },
       on: {
         keydown: _vm.typing,
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.body = $event.target.value
+          _vm.message = $event.target.value
         }
       }
     }),
@@ -77074,23 +77078,20 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
         alert(err);
       });
     },
-    sendMessages: function sendMessages(_ref12, _ref13) {
+    sendMessage: function sendMessage(_ref12, _ref13) {
       var commit = _ref12.commit;
       var currentUser = _ref13.currentUser,
-          body = _ref13.body;
-      // axios
-      //   .post(`/api/v1/matches/users`,{
-      //     currentUser: currentUser
-      //   })
-      //   .then((response) => {
-      //     commit('updateMatchedUsers', response.data.matchedUsers || [])
-      //   })
-      //   .catch((err) => {
-      //     alert(err)
-      //   })
-      commit('updateMessages', [{
-        body: body
-      }]);
+          matchId = _ref13.matchId,
+          message = _ref13.message;
+      axios.post("/api/v1/chats/sendMessage", {
+        currentUser: currentUser,
+        matchId: matchId,
+        message: message
+      }).then(function (response) {
+        commit('updateMessages', response.data.chatMessages || []);
+      }).catch(function (err) {
+        alert(err);
+      });
     },
     login: function login(_ref14) {
       var commit = _ref14.commit;

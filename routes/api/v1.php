@@ -36,6 +36,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
         Route::group(['prefix' => 'chats', 'as' => 'chats.'],
           function () {
               Route::post('/getMessages', 'ChatController@getMessages');
+              Route::post('/sendMessage', 'ChatController@sendMessage');
         });
       });
 

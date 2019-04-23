@@ -48,4 +48,19 @@ class ChatController extends Controller
 
         return response()->json(['chatMessages' => $chatMessages]);
     }
+
+    public function sendMessage(Request $request)
+    {
+        $data = $request->all();
+        $match_id = $data['matchId'];
+        $message = $data['message'];
+        $currentUser = $data['currentUser'];
+
+        $chat_id = Chat::where('match_id', $match_id)->pluck('id')->first();
+        $chatMessage = ChatMessage::create(['chat_id' => $chat_id, 'send_from' => $currentUser['id'], 'message' => $message]);
+
+        $chatMessages = ChatMessage::where('chat_id', $chat_id)->get();
+
+        return response()->json(['chatMessages' => $chatMessages]);
+    }
 }

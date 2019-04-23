@@ -143,18 +143,19 @@ export default {
           alert(err)
         })
     },
-    sendMessages ({ commit }, {currentUser, body}) {
-      // axios
-      //   .post(`/api/v1/matches/users`,{
-      //     currentUser: currentUser
-      //   })
-      //   .then((response) => {
-      //     commit('updateMatchedUsers', response.data.matchedUsers || [])
-      //   })
-      //   .catch((err) => {
-      //     alert(err)
-      //   })
-      commit('updateMessages', [{ body: body }])
+    sendMessage ({ commit }, {currentUser, matchId, message}) {
+      axios
+        .post(`/api/v1/chats/sendMessage`,{
+          currentUser: currentUser,
+          matchId: matchId,
+          message: message
+        })
+        .then((response) => {
+          commit('updateMessages', response.data.chatMessages || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
     },
     login ({ commit }) {
       axios

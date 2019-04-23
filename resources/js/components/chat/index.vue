@@ -42,12 +42,10 @@ export default {
   },
   data (){
     return {
-      profileName: '',
       loading: false
     }
   },
   created () {
-    this.profileName = this.profile.name
     this.fetchMatchedUsers()
     this.loading = true
   },
