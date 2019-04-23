@@ -6477,6 +6477,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'chat-messages',
   data: function data() {
@@ -6496,8 +6505,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchMessages: function fetchMessages() {
-      this.$store.dispatch('getMessages', {
-        currentUser: this.currentUser
+      this.$store.dispatch('getChatMessages', {
+        currentUser: this.currentUser,
+        matchId: this.$route.params.id
       });
     }
   }
@@ -58695,19 +58705,33 @@ var render = function() {
           class: { self: message.selfMessage }
         },
         [
-          _c("strong", { staticClass: "c-chat-message__box--user" }, [
-            _vm._v("hoge")
-          ]),
-          _vm._v(" "),
-          _c(
-            "p",
-            {
-              staticClass:
-                "c-chat-message__box--body c-chat-message__box--body--from"
-            },
-            [_vm._v(_vm._s(message.body))]
-          )
-        ]
+          message.send_from == _vm.currentUser.id
+            ? [
+                _c(
+                  "p",
+                  {
+                    staticClass:
+                      "c-chat-message__box--body c-chat-message__box--body--to"
+                  },
+                  [_vm._v(_vm._s(message.message))]
+                )
+              ]
+            : [
+                _c("strong", { staticClass: "c-chat-message__box--user" }, [
+                  _vm._v("hoge")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass:
+                      "c-chat-message__box--body c-chat-message__box--body--from"
+                  },
+                  [_vm._v(_vm._s(message.message))]
+                )
+              ]
+        ],
+        2
       )
     }),
     0
@@ -77037,22 +77061,18 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
         alert(err);
       });
     },
-    getMessages: function getMessages(_ref10, _ref11) {
+    getChatMessages: function getChatMessages(_ref10, _ref11) {
       var commit = _ref10.commit;
-      var currentUser = _ref11.currentUser;
-      // axios
-      //   .post(`/api/v1/matches/users`,{
-      //     currentUser: currentUser
-      //   })
-      //   .then((response) => {
-      //     commit('updateMatchedUsers', response.data.matchedUsers || [])
-      //   })
-      //   .catch((err) => {
-      //     alert(err)
-      //   })
-      commit('updateMessages', [{
-        body: 'hi!'
-      }]);
+      var currentUser = _ref11.currentUser,
+          matchId = _ref11.matchId;
+      axios.post("/api/v1/chats/getMessages", {
+        currentUser: currentUser,
+        matchId: matchId
+      }).then(function (response) {
+        commit('updateMessages', response.data.chatMessages || []);
+      }).catch(function (err) {
+        alert(err);
+      });
     },
     sendMessages: function sendMessages(_ref12, _ref13) {
       var commit = _ref12.commit;

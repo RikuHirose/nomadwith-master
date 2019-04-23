@@ -4,8 +4,17 @@
         v-for="message in this.messages"
         class="c-chat-message__box"
         :class="{ 'self': message.selfMessage }">
-        <strong class="c-chat-message__box--user">hoge</strong>
-        <p class="c-chat-message__box--body c-chat-message__box--body--from">{{ message.body }}</p>
+        <template
+          v-if="message.send_from == currentUser.id">
+          <p
+            class="c-chat-message__box--body c-chat-message__box--body--to">{{ message.message }}</p>
+        </template>
+        <template
+          v-else>
+            <strong class="c-chat-message__box--user">hoge</strong>
+            <p
+            class="c-chat-message__box--body c-chat-message__box--body--from">{{ message.message }}</p>
+          </template>
       </div>
   </div>
 </template>
@@ -32,8 +41,9 @@
     },
     methods: {
       fetchMessages () {
-        this.$store.dispatch('getMessages', {
+        this.$store.dispatch('getChatMessages', {
           currentUser: this.currentUser,
+          matchId: this.$route.params.id
         })
       }
     }

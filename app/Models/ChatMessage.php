@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Chat extends Model
+class ChatMessage extends Model
 {
     /**
      * The attributes that are mass assignable.

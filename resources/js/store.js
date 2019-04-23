@@ -130,18 +130,18 @@ export default {
           alert(err)
         })
     },
-    getMessages ({ commit }, {currentUser}) {
-      // axios
-      //   .post(`/api/v1/matches/users`,{
-      //     currentUser: currentUser
-      //   })
-      //   .then((response) => {
-      //     commit('updateMatchedUsers', response.data.matchedUsers || [])
-      //   })
-      //   .catch((err) => {
-      //     alert(err)
-      //   })
-      commit('updateMessages', [{ body: 'hi!' }])
+    getChatMessages ({ commit }, {currentUser, matchId}) {
+      axios
+        .post(`/api/v1/chats/getMessages`,{
+          currentUser: currentUser,
+          matchId: matchId
+        })
+        .then((response) => {
+          commit('updateMessages', response.data.chatMessages || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
     },
     sendMessages ({ commit }, {currentUser, body}) {
       // axios

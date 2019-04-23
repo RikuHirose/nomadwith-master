@@ -30,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\MatchRepositoryInterface::class,
             \App\Repositories\Eloquent\MatchRepository::class
         );
+
+        // Chat
+        $this->app->bind(
+            \App\Repositories\ChatRepositoryInterface::class,
+            \App\Repositories\Eloquent\ChatRepository::class
+        );
     }
 
     /**

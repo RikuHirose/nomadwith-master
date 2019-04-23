@@ -27,9 +27,15 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
 
               Route::post('/{profile}/like', 'MatchController@like');
         });
+
         Route::group(['prefix' => 'matches', 'as' => 'matches.'],
           function () {
               Route::post('/users', 'MatchController@matchedUsers');
+        });
+
+        Route::group(['prefix' => 'chats', 'as' => 'chats.'],
+          function () {
+              Route::post('/getMessages', 'ChatController@getMessages');
         });
       });
 
