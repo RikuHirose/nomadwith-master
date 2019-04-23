@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 use App\Repositories\MatchRepositoryInterface;
 use App\Models\Match;
 use App\Models\User;
+use App\Models\Chat;
 
 class MatchRepository implements MatchRepositoryInterface
 {
@@ -30,31 +31,6 @@ class MatchRepository implements MatchRepositoryInterface
 
     public function like($formData)
     {
-        // $like = $this->match->firstOrCreate([
-        //     'request_user_id' => $formData['request_user_id'],
-        //     'target_user_id' => $formData['target_user_id'],
-        // ]);
-
-        // // wasRecentlyCreated を用いることで、今回のリクエストで作成されたことを判定できる
-        // if ($like->wasRecentlyCreated) {
-        //     $like->save();
-        // } else {
-        //     dd($like->first());
-        // }
-
-        // user_id = 1がuser_id = 2に対してlikeをした場合
-        // createorfirstする
-
-        // request_user_id: 1
-        // target_user_id: 2
-        // matched_flag: false
-
-        // user_id = 2がuser_id = 1に対してlikeをした場合
-        // createorfirstする
-
-        // request_user_id: 1
-        // target_user_id: 2
-        // matched_flag: true
 
         $like = $this->match
         ->where([
@@ -97,6 +73,8 @@ class MatchRepository implements MatchRepositoryInterface
                 ->first();
 
                 $liked = $liked->update(['matched_flag' => true]);
+
+                $chat = Chat::create(['match_id' => $liked->id]);
 
                 return $message = 'マッチしました';
             }
@@ -141,10 +119,15 @@ class MatchRepository implements MatchRepositoryInterface
         }
 
         $filterMatchedUsers = collect();
+        $a = collect();
         foreach ($collection as $key => $value) {
             $user = User::where('id', $value['user_id'])->first();
             $user->load('profile');
-            $filterMatchedUsers->push($user);
+
+            $a->put('user', $user);
+            $a->put('match_id', $value['id']);
+
+            $filterMatchedUsers->push($a);
         }
 
         return $filterMatchedUsers;

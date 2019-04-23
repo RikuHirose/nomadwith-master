@@ -14,7 +14,7 @@
           </template>
           <template v-else>
             <li class="nav-item">
-              <a href="/chat">
+              <a href="/chats">
                 <i class="fas fa-comment"></i>
               </a>
             </li>

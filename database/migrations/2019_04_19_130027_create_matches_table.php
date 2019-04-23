@@ -14,7 +14,7 @@ class CreateMatchesTable extends Migration
     public function up()
     {
         Schema::create('matches', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->bigInteger('request_user_id')->unsigned()->index();
             $table->bigInteger('target_user_id')->unsigned()->index();

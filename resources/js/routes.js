@@ -8,6 +8,7 @@ import Mypage from './components/mypage/show.vue'
 import Chat from './components/chat/index.vue'
 
 
+
 export const routes = [
   {
     path: '/',
@@ -38,8 +39,8 @@ export const routes = [
         component: Mypage
       },
       {
-        path: 'chat',
-        component: Chat
+        path: 'chats/:id',
+        component: Chat,
       }
     ]
   }

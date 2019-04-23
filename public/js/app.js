@@ -6544,6 +6544,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6563,10 +6566,9 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.profileName = this.profile.name;
     this.fetchMatchedUsers();
-  },
-  beforeMount: function beforeMount() {
     this.loading = true;
   },
+  beforeMount: function beforeMount() {},
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
@@ -11602,7 +11604,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".message-area[data-v-6185e5e0] {\n  height: 400px;\n  max-height: 400px;\n  overflow-y: scroll;\n  padding: 15px;\n  border-bottom: 1px solid #eee;\n}\n.body[data-v-6185e5e0] {\n  padding: 5px 20px;\n  border-radius: 6px;\n  font-weight: 300;\n  font-size: 14px;\n  line-height: 1.4;\n  white-space: pre-wrap;\n  -webkit-font-smoothing: subpixel-antialiased;\n  color: white;\n  background-color: #4e8cff;\n}", ""]);
+exports.push([module.i, ".c-chat-messages__wrap[data-v-6185e5e0] {\n  height: 400px;\n  max-height: 400px;\n  overflow-y: scroll;\n  padding: 15px;\n  border-bottom: 1px solid #eee;\n}\n.c-chat-message__box--body[data-v-6185e5e0] {\n  padding: 5px 20px;\n  border-radius: 6px;\n  font-weight: 300;\n  font-size: 14px;\n  line-height: 1.4;\n  white-space: pre-wrap;\n  -webkit-font-smoothing: subpixel-antialiased;\n}\n.c-chat-message__box--body--from[data-v-6185e5e0] {\n  background-color: #f1f0f0;\n  color: black;\n}\n.c-chat-message__box--body--to[data-v-6185e5e0] {\n  color: white;\n  background-color: #4e8cff;\n}", ""]);
 
 // exports
 
@@ -58436,7 +58438,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { attrs: { href: "/chat" } }, [
+      _c("a", { attrs: { href: "/chats" } }, [
         _c("i", { staticClass: "fas fa-comment" })
       ])
     ])
@@ -58684,15 +58686,27 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { ref: "message", staticClass: "message-area" },
+    { ref: "message", staticClass: "c-chat-messages__wrap" },
     _vm._l(this.messages, function(message) {
       return _c(
         "div",
-        { staticClass: "message", class: { self: message.selfMessage } },
+        {
+          staticClass: "c-chat-message__box",
+          class: { self: message.selfMessage }
+        },
         [
-          _c("strong", { staticClass: "user" }, [_vm._v("hoge")]),
+          _c("strong", { staticClass: "c-chat-message__box--user" }, [
+            _vm._v("hoge")
+          ]),
           _vm._v(" "),
-          _c("p", { staticClass: "body" }, [_vm._v(_vm._s(message.body))])
+          _c(
+            "p",
+            {
+              staticClass:
+                "c-chat-message__box--body c-chat-message__box--body--from"
+            },
+            [_vm._v(_vm._s(message.body))]
+          )
         ]
       )
     }),
@@ -58730,14 +58744,21 @@ var render = function() {
           _c(
             "div",
             { staticClass: "card-body" },
-            _vm._l(this.matchedUsers, function(user) {
-              return _c("div", { staticClass: "users" }, [
-                _vm.loading
-                  ? _c("a", { attrs: { href: "#" } }, [
-                      _vm._v(_vm._s(user.profile.name))
-                    ])
-                  : _vm._e()
-              ])
+            _vm._l(_vm.matchedUsers, function(user) {
+              return _c(
+                "div",
+                { staticClass: "users" },
+                [
+                  user.user.profile
+                    ? _c(
+                        "router-link",
+                        { attrs: { to: "/chats/" + user.match_id } },
+                        [_vm._v(_vm._s(user.user.profile.name))]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
             }),
             0
           )
@@ -75638,7 +75659,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-js-modal */ "./node_modules/vue-js-modal/dist/index.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_js_modal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_beautiful_chat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-beautiful-chat */ "./node_modules/vue-beautiful-chat/src/index.js");
+/* harmony import */ var vue_beautiful_chat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-beautiful-chat */ "./node_modules/vue-beautiful-chat/src/index.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
 /* harmony import */ var _components_MainApp_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/MainApp.vue */ "./resources/js/components/MainApp.vue");
@@ -75658,7 +75679,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_3___default.a, {
   dialog: true
 });
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_beautiful_chat__WEBPACK_IMPORTED_MODULE_8__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_beautiful_chat__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store(_store__WEBPACK_IMPORTED_MODULE_6__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: _routes__WEBPACK_IMPORTED_MODULE_5__["routes"],
@@ -76107,15 +76128,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/chat/chat.vue ***!
   \***********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chat_vue_vue_type_template_id_051eb274___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chat.vue?vue&type=template&id=051eb274& */ "./resources/js/components/chat/chat.vue?vue&type=template&id=051eb274&");
 /* harmony import */ var _chat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chat.vue?vue&type=script&lang=js& */ "./resources/js/components/chat/chat.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _chat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _chat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -76145,7 +76165,7 @@ component.options.__file = "resources/js/components/chat/chat.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/chat/chat.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76890,7 +76910,7 @@ var routes = [{
     path: 'mypage',
     component: _components_mypage_show_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: 'chat',
+    path: 'chats/:id',
     component: _components_chat_index_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }]
 }];

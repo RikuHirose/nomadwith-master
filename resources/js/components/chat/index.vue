@@ -5,8 +5,11 @@
           <div class="card">
               <div class="card-header">Matched Users</div>
               <div class="card-body">
-                  <div class="users" v-for="user in this.matchedUsers">
-                      <a href="#" v-if="loading">{{ user.profile.name }}</a>
+                  <div class="users" v-for="user in matchedUsers">
+                      <router-link
+                        v-if="user.user.profile"
+                        :to="`/chats/${user.match_id}`"
+                        class="">{{ user.user.profile.name }}</router-link>
                   </div>
               </div>
           </div>
@@ -46,9 +49,9 @@ export default {
   created () {
     this.profileName = this.profile.name
     this.fetchMatchedUsers()
+    this.loading = true
   },
   beforeMount() {
-    this.loading = true
   },
   computed: {
     currentUser() {
