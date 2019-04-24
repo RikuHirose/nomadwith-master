@@ -38,7 +38,6 @@
             return
         }
         // let messageObj = this.buildMessage();
-        // Event.$emit('added_message', messageObj);
 
         this.$store.dispatch('sendMessage', {
           currentUser: this.currentUser,

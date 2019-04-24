@@ -6,10 +6,10 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import VModal from 'vue-js-modal'
 import Chat from 'vue-beautiful-chat'
+
 import {routes} from './routes'
 import StoreData from './store'
 import MainApp from './components/MainApp.vue';
-
 
 Vue.use(VueRouter)
 Vue.use(Vuex)

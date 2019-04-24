@@ -4,7 +4,9 @@
       <div class="col-md-4">
           <div class="card">
               <div class="card-header">Matched Users</div>
-              <div class="card-body">
+              <div
+                id="message-card-body"
+                class="card-body">
                   <div class="users" v-for="user in matchedUsers">
                       <router-link
                         v-if="user.user.profile"
@@ -42,14 +44,10 @@ export default {
   },
   data (){
     return {
-      loading: false
     }
   },
   created () {
     this.fetchMatchedUsers()
-    this.loading = true
-  },
-  beforeMount() {
   },
   computed: {
     currentUser() {
@@ -60,6 +58,9 @@ export default {
     },
     matchedUsers() {
       return this.$store.getters.matchedUsers
+    },
+    messages() {
+      return this.$store.getters.messages
     }
   },
   methods: {
@@ -67,7 +68,8 @@ export default {
       this.$store.dispatch('matchedUsers', {
         currentUser: this.currentUser,
       })
-    }
+    },
+
   }
 }
 </script>

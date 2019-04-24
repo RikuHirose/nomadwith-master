@@ -6437,7 +6437,6 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.message || this.message.trim() === '') {
         return;
       } // let messageObj = this.buildMessage();
-      // Event.$emit('added_message', messageObj);
 
 
       this.$store.dispatch('sendMessage', {
@@ -6492,6 +6491,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'chat-messages',
   data: function data() {
@@ -6501,12 +6502,18 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchMessages();
   },
   mounted: function mounted() {},
+  updated: function updated() {
+    this.scrollToLastMessage("chat-message-".concat(this.lastMessage.id));
+  },
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
     },
     messages: function messages() {
       return this.$store.getters.messages;
+    },
+    lastMessage: function lastMessage() {
+      return this.$store.getters.messages.slice(-1)[0];
     }
   },
   methods: {
@@ -6515,6 +6522,12 @@ __webpack_require__.r(__webpack_exports__);
         currentUser: this.currentUser,
         matchId: this.$route.params.id
       });
+    },
+    scrollToLastMessage: function scrollToLastMessage(lastMessageId) {
+      document.getElementById(lastMessageId).scrollIntoView(); // if (lastMessageId.match(/^#/)) {
+      //   console.log(lastMessageId.replace)
+      //   document.getElementById(lastMessageId.replace(/^#/, '')).scrollIntoView()
+      // }
     }
   }
 });
@@ -6563,6 +6576,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -6574,15 +6589,11 @@ __webpack_require__.r(__webpack_exports__);
     'chat': _chat_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
-    return {
-      loading: false
-    };
+    return {};
   },
   created: function created() {
     this.fetchMatchedUsers();
-    this.loading = true;
   },
-  beforeMount: function beforeMount() {},
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
@@ -6592,6 +6603,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     matchedUsers: function matchedUsers() {
       return this.$store.getters.matchedUsers;
+    },
+    messages: function messages() {
+      return this.$store.getters.messages;
     }
   },
   methods: {
@@ -58715,7 +58729,8 @@ var render = function() {
                   "p",
                   {
                     staticClass:
-                      "c-chat-message__box--body c-chat-message__box--body--to"
+                      "c-chat-message__box--body c-chat-message__box--body--to",
+                    attrs: { id: "chat-message-" + message.id }
                   },
                   [_vm._v(_vm._s(message.message))]
                 )
@@ -58729,7 +58744,8 @@ var render = function() {
                   "p",
                   {
                     staticClass:
-                      "c-chat-message__box--body c-chat-message__box--body--from"
+                      "c-chat-message__box--body c-chat-message__box--body--from",
+                    attrs: { id: "chat-message-" + message.id }
                   },
                   [_vm._v(_vm._s(message.message))]
                 )
@@ -58771,7 +58787,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "card-body" },
+            { staticClass: "card-body", attrs: { id: "message-card-body" } },
             _vm._l(_vm.matchedUsers, function(user) {
               return _c(
                 "div",

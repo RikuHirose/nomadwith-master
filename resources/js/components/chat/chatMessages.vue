@@ -1,21 +1,23 @@
 <template>
   <div class="c-chat-messages__wrap" ref="message">
-      <div
-        v-for="message in this.messages"
-        class="c-chat-message__box"
-        :class="{ 'self': message.selfMessage }">
-        <template
-          v-if="message.send_from == currentUser.id">
-          <p
-            class="c-chat-message__box--body c-chat-message__box--body--to">{{ message.message }}</p>
-        </template>
-        <template
-          v-else>
-            <strong class="c-chat-message__box--user">hoge</strong>
-            <p
-            class="c-chat-message__box--body c-chat-message__box--body--from">{{ message.message }}</p>
-          </template>
-      </div>
+    <div
+      v-for="message in this.messages"
+      class="c-chat-message__box"
+      :class="{ 'self': message.selfMessage }">
+      <template
+        v-if="message.send_from == currentUser.id">
+        <p
+          :id="`chat-message-${message.id}`"
+          class="c-chat-message__box--body c-chat-message__box--body--to">{{ message.message }}</p>
+      </template>
+      <template
+        v-else>
+        <strong class="c-chat-message__box--user">hoge</strong>
+        <p
+          :id="`chat-message-${message.id}`"
+          class="c-chat-message__box--body c-chat-message__box--body--from">{{ message.message }}</p>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -31,12 +33,18 @@
     },
     mounted() {
     },
+    updated () {
+      this.scrollToLastMessage(`chat-message-${this.lastMessage.id}`)
+    },
     computed: {
       currentUser() {
         return this.$store.getters.currentUser
       },
       messages() {
         return this.$store.getters.messages
+      },
+      lastMessage() {
+        return this.$store.getters.messages.slice(-1)[0]
       },
     },
     methods: {
@@ -45,6 +53,13 @@
           currentUser: this.currentUser,
           matchId: this.$route.params.id
         })
+      },
+      scrollToLastMessage(lastMessageId) {
+        document.getElementById(lastMessageId).scrollIntoView()
+        // if (lastMessageId.match(/^#/)) {
+        //   console.log(lastMessageId.replace)
+        //   document.getElementById(lastMessageId.replace(/^#/, '')).scrollIntoView()
+        // }
       }
     }
   }
