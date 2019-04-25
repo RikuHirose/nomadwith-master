@@ -1,5 +1,5 @@
 <template>
-  <div class="c-chat-messages__wrap" ref="message">
+  <div class="c-chat-messages__wrap">
     <div
       v-for="message in this.messages"
       class="c-chat-message__box"
@@ -7,6 +7,7 @@
       <template
         v-if="message.send_from == currentUser.id">
         <p
+          v-if="message.id"
           :id="`chat-message-${message.id}`"
           class="c-chat-message__box--body c-chat-message__box--body--to">{{ message.message }}</p>
       </template>
@@ -14,6 +15,7 @@
         v-else>
         <strong class="c-chat-message__box--user">hoge</strong>
         <p
+          v-if="message.id"
           :id="`chat-message-${message.id}`"
           class="c-chat-message__box--body c-chat-message__box--body--from">{{ message.message }}</p>
       </template>
@@ -24,6 +26,7 @@
 <script>
   export default {
     name: 'chat-messages',
+    props: [],
     data() {
       return {
       }
@@ -56,10 +59,6 @@
       },
       scrollToLastMessage(lastMessageId) {
         document.getElementById(lastMessageId).scrollIntoView()
-        // if (lastMessageId.match(/^#/)) {
-        //   console.log(lastMessageId.replace)
-        //   document.getElementById(lastMessageId.replace(/^#/, '')).scrollIntoView()
-        // }
       }
     }
   }

@@ -6,6 +6,7 @@ import Contact from './components/profiles/contact/contact.vue'
 import Mypage from './components/mypage/show.vue'
 
 import Chat from './components/chat/index.vue'
+import ChatMessages from './components/chat/chatMessages.vue'
 
 
 
@@ -29,7 +30,7 @@ export const routes = [
         component: Profile,
         children: [
           {
-            path: '/contact',
+            path: 'contact',
             component: Contact
           },
         ]
@@ -39,8 +40,14 @@ export const routes = [
         component: Mypage
       },
       {
-        path: 'chats/:id',
+        path: 'chats',
         component: Chat,
+        children: [
+          {
+            path: ':id',
+            component: ChatMessages
+          },
+        ]
       }
     ]
   }
