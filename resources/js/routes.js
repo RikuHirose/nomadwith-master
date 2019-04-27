@@ -40,14 +40,8 @@ export const routes = [
         component: Mypage
       },
       {
-        path: 'chats',
+        path: 'chats/:id',
         component: Chat,
-        children: [
-          {
-            path: ':id',
-            component: ChatMessages
-          },
-        ]
       }
     ]
   }

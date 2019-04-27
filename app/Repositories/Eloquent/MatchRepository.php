@@ -83,7 +83,7 @@ class MatchRepository implements MatchRepositoryInterface
 
     }
 
-    public function matchedUsers($currentUserId)
+    public function matchedUsersDesc($currentUserId)
     {
         $matchedUsers = $this->match
         ->where([
@@ -119,9 +119,9 @@ class MatchRepository implements MatchRepositoryInterface
         }
 
         $filterMatchedUsers = collect();
-        foreach ($collection as $key => $value) {
+        foreach (array_reverse($collection->toArray()) as $key => $value) {
             $a = collect();
-            $user = User::where('id', $value['user_id'])->first();
+            $user = User::where('id', $value['user_id'])->latest()->first();
             $user->load('profile');
 
             $a->put('user', $user);

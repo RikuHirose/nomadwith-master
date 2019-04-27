@@ -8,15 +8,15 @@
                 id="message-card-body"
                 class="card-body">
                   <div class="users" v-for="user in matchedUsers">
-                      <!-- <router-link
+                      <router-link
                         v-if="user.user.profile"
                         :to="`/chats/${user.match_id}`"
-                        @click="getMessages()"
-                        class="">{{ user.user.profile.name }}</router-link> -->
-                        <button
+                        @click.native="fetchMessages(user.match_id)"
+                        class="">{{ user.user.profile.name }}</router-link>
+                        <!-- <button
                           v-if="user.user.profile"
                           @click="fetchMessages(user.match_id)"
-                          type="button" class="btn btn-link">{{ user.user.profile.name }}</button>
+                          type="button" class="btn btn-link">{{ user.user.profile.name }}</button> -->
                   </div>
               </div>
           </div>
@@ -57,14 +57,12 @@
 </template>
 
 <script>
-import chatMessages from './chatMessages.vue'
 import chatForm from './chatForm.vue'
 import chat from './chat.vue'
 
 export default {
   name: 'chat-index',
   components: {
-    'chatMessages': chatMessages,
     'chatForm': chatForm,
     'chat': chat
   },

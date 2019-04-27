@@ -14,9 +14,12 @@
           </template>
           <template v-else>
             <li class="nav-item">
-              <a href="/chats">
+              <router-link
+                v-if="matchedFirstUser"
+                :to="`/chats/${matchedFirstUser.match_id}`"
+                class="">
                 <i class="fas fa-comment"></i>
-              </a>
+              </router-link>
             </li>
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
@@ -47,12 +50,25 @@ export default {
     }
   },
 
+  created () {
+    this.fetchMatchedUsers()
+  },
   computed: {
     currentUser() {
       return this.$store.getters.currentUser
     },
     profile() {
       return this.$store.getters.currentUser.profile
+    },
+    matchedFirstUser() {
+      return this.$store.getters.matchedUsers[0]
+    },
+  },
+  methods: {
+    fetchMatchedUsers () {
+      this.$store.dispatch('matchedUsers', {
+        currentUser: this.currentUser,
+      })
     }
   }
 }

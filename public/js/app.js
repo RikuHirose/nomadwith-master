@@ -6091,6 +6091,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -6128,7 +6130,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
   name: 'app-header',
   methods: {
     logout: function logout() {
@@ -6137,15 +6142,27 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('logout');
     }
   },
+  created: function created() {
+    this.fetchMatchedUsers();
+  },
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
     },
     profile: function profile() {
       return this.$store.getters.currentUser.profile;
+    },
+    matchedFirstUser: function matchedFirstUser() {
+      return this.$store.getters.matchedUsers[0];
     }
   }
-});
+}, "methods", {
+  fetchMatchedUsers: function fetchMatchedUsers() {
+    this.$store.dispatch('matchedUsers', {
+      currentUser: this.currentUser
+    });
+  }
+}));
 
 /***/ }),
 
@@ -6543,9 +6560,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _chatMessages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chatMessages.vue */ "./resources/js/components/chat/chatMessages.vue");
-/* harmony import */ var _chatForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chatForm.vue */ "./resources/js/components/chat/chatForm.vue");
-/* harmony import */ var _chat_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./chat.vue */ "./resources/js/components/chat/chat.vue");
+/* harmony import */ var _chatForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chatForm.vue */ "./resources/js/components/chat/chatForm.vue");
+/* harmony import */ var _chat_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chat.vue */ "./resources/js/components/chat/chat.vue");
 //
 //
 //
@@ -6604,15 +6620,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'chat-index',
   components: {
-    'chatMessages': _chatMessages_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    'chatForm': _chatForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    'chat': _chat_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    'chatForm': _chatForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'chat': _chat_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {};
@@ -58447,7 +58461,26 @@ var render = function() {
                   !_vm.currentUser
                     ? [_vm._m(1)]
                     : [
-                        _vm._m(2),
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _vm.matchedFirstUser
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to:
+                                        "/chats/" +
+                                        _vm.matchedFirstUser.match_id
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fas fa-comment" })]
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
                         _c("li", { staticClass: "nav-item dropdown" }, [
                           _c(
@@ -58552,16 +58585,6 @@ var staticRenderFns = [
         },
         [_vm._v("FaceBookでLogin")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { attrs: { href: "/chats" } }, [
-        _c("i", { staticClass: "fas fa-comment" })
-      ])
     ])
   }
 ]
@@ -58886,23 +58909,27 @@ var render = function() {
             "div",
             { staticClass: "card-body", attrs: { id: "message-card-body" } },
             _vm._l(_vm.matchedUsers, function(user) {
-              return _c("div", { staticClass: "users" }, [
-                user.user.profile
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-link",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.fetchMessages(user.match_id)
+              return _c(
+                "div",
+                { staticClass: "users" },
+                [
+                  user.user.profile
+                    ? _c(
+                        "router-link",
+                        {
+                          attrs: { to: "/chats/" + user.match_id },
+                          nativeOn: {
+                            click: function($event) {
+                              return _vm.fetchMessages(user.match_id)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v(_vm._s(user.user.profile.name))]
-                    )
-                  : _vm._e()
-              ])
+                        },
+                        [_vm._v(_vm._s(user.user.profile.name))]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
             }),
             0
           )
@@ -77123,12 +77150,8 @@ var routes = [{
     path: 'mypage',
     component: _components_mypage_show_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: 'chats',
-    component: _components_chat_index_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    children: [{
-      path: ':id',
-      component: _components_chat_chatMessages_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
-    }]
+    path: 'chats/:id',
+    component: _components_chat_index_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }]
 }];
 
