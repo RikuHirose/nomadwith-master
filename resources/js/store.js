@@ -33,8 +33,16 @@ export default {
       return state.matchedUsers
     },
 
+    matchedFirstUser (state) {
+      return state.matchedUsers[0]
+    },
+
     messages (state) {
       return state.messages
+    },
+
+    lastMessage (state) {
+      return state.messages.slice(-1)[0]
     },
 
   },

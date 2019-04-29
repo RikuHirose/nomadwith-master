@@ -93,7 +93,7 @@ export default {
         return this.$store.getters.messages
     },
     lastMessage() {
-      return this.$store.getters.messages.slice(-1)[0]
+      return this.$store.getters.lastMessage
     },
   },
   methods: {

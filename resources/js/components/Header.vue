@@ -61,7 +61,7 @@ export default {
       return this.$store.getters.currentUser.profile
     },
     matchedFirstUser() {
-      return this.$store.getters.matchedUsers[0]
+      return this.$store.getters.matchedFirstUser
     },
   },
   methods: {

@@ -6153,7 +6153,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.$store.getters.currentUser.profile;
     },
     matchedFirstUser: function matchedFirstUser() {
-      return this.$store.getters.matchedUsers[0];
+      return this.$store.getters.matchedFirstUser;
     }
   }
 }, "methods", {
@@ -6654,7 +6654,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.getters.messages;
     },
     lastMessage: function lastMessage() {
-      return this.$store.getters.messages.slice(-1)[0];
+      return this.$store.getters.lastMessage;
     }
   },
   methods: {
@@ -77195,8 +77195,14 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
     matchedUsers: function matchedUsers(state) {
       return state.matchedUsers;
     },
+    matchedFirstUser: function matchedFirstUser(state) {
+      return state.matchedUsers[0];
+    },
     messages: function messages(state) {
       return state.messages;
+    },
+    lastMessage: function lastMessage(state) {
+      return state.messages.slice(-1)[0];
     }
   },
   mutations: {
