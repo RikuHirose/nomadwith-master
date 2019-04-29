@@ -21,7 +21,7 @@ class SocialController extends Controller
         $this->socialProviderRepository = $socialProviderRepository;
     }
 
-        /**
+    /**
      * Redirect the user to the FaceBook authentication page.
      *
      * @return Response
@@ -32,13 +32,13 @@ class SocialController extends Controller
     }
 
     /**
-     * Redirect the user to the FaceBook authentication page.
+     * Redirect the user to the FaceBook & Twitter authentication page.
      *
      * @return Response
      */
-    public function redirectToFacebookProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -46,28 +46,35 @@ class SocialController extends Controller
      *
      * @return Response
      */
-    public function handleFacebookProviderCallback()
+    public function handleProviderCallback($provider)
     {
         try{
-            $facebookUser = Socialite::driver('facebook')->user();
+            $socialUser = Socialite::driver($provider)->user();
 
         } catch(Exception $e){
             return redirect("/");
         }
 
         //privider_idとemailですでに登録済みかチェック
-        $socialProvider = $this->socialProviderRepository->findSocialProvider($facebookUser->getId(), $facebookUser->getEmail());
-        // $socialProvider = SocialProvider::where('provider_id',$facebookUser->getId())->first();
-        dd($socialProvider);
+        $provider = $this->socialProviderRepository->findSocialProvider($socialUser->getId(), $socialUser->getEmail());
 
-        if(!$socialProvider) {
+        if(!$provider) {
 
             $user = User::firstOrCreate(
-                ['email' => $facebookUser->getEmail(), 'facebook_id' => $facebookUser->getId()]
+                []
+            );
+
+            SocialProvider::firstOrCreate(
+                [
+                    'user_id'     => $user->id,
+                    'email'       => $socialUser->getEmail(),
+                    'provider_id' => $socialUser->getId(),
+                    'provider'    => $provider
+                ]
             );
 
             $profile = Profile::firstOrCreate(
-                ['user_id' => $user->id,'name' => $facebookUser->getName(),'img_url' => $facebookUser->avatar_original]
+                ['user_id' => $user->id, 'name' => $socialUser->getName(),'img_url' => $socialUser->avatar_original]
             );
 
         } else {
@@ -75,7 +82,7 @@ class SocialController extends Controller
             //     ['email' => $user->getEmail(), 'name' => $user->getName(), 'facebook_id' => $user->getId()]
             // );
             $user = User::where(
-                ['email' => $facebookUser->getEmail(), 'facebook_id' => $facebookUser->getId()]
+                ['id' => $provider->user_id]
             )->first();
         }
 

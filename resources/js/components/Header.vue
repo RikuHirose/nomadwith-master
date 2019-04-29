@@ -11,6 +11,9 @@
               <li>
                 <a href="/auth/login/facebook" class="dropdown-item">FaceBookでLogin</a>
               </li>
+              <li>
+                <a href="/auth/login/twitter" class="dropdown-item">TwitterでLogin</a>
+              </li>
           </template>
           <template v-else>
             <li class="nav-item">
@@ -42,14 +45,6 @@
 export default {
   name: 'app-header',
 
-  methods: {
-    logout() {
-      // this.$store.commit('logout');
-      // this.$router.push('/signin');
-      this.$store.dispatch('logout')
-    }
-  },
-
   created () {
     this.fetchMatchedUsers()
   },
@@ -69,6 +64,11 @@ export default {
       this.$store.dispatch('matchedUsers', {
         currentUser: this.currentUser,
       })
+    },
+    logout() {
+      // this.$store.commit('logout');
+      // this.$router.push('/signin');
+      this.$store.dispatch('logout')
     }
   }
 }

@@ -16,6 +16,8 @@ class CreateSocialProvidersTable extends Migration
         Schema::create('social_providers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->index();
+
+            $table->string('email')->unique()->nullable();
             $table->string('provider_id')->nullable();
             $table->string('provider')->nullable();
 

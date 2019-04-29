@@ -14,7 +14,8 @@
 // Route::get('/{any}', function(){
 //     return view('home');
 // })->where('any','.*');
-Route::get('/{any?}', 'HomeController@index')->name('index')->where('any', '.*');
+// Route::get('/{any?}', 'HomeController@index')->name('index')->where('any', '.*');
+Route::get('{all}', 'HomeController@index')->where('all', '^((?!auth).)*');
 
 // Route::get('/', function(){
 //     return view('welcome');
@@ -26,8 +27,12 @@ Auth::routes();
 
 Route::group(['middleware' => ['guest']], function () {
   Route::get('auth/login', 'Auth\SocialController@viewLogin');
-  Route::get('auth/login/facebook', 'Auth\SocialController@redirectToFacebookProvider');
-  Route::get('auth/facebook/callback', 'Auth\SocialController@handleFacebookProviderCallback');
+
+  Route::get('auth/login/{provider}', 'Auth\SocialController@redirectToProvider');
+  Route::get('auth/{provider}/callback', 'Auth\SocialController@handleProviderCallback');
+
+  // Route::get('auth/login/twitter', 'Auth\SocialController@redirectToTwitterProvider');
+  // Route::get('auth/twitter/callback', 'Auth\SocialController@handleTwitterProviderCallback');
 });
 
 

@@ -178,6 +178,7 @@ export default {
         .post('/logout', {})
         .then((response) => {
           window.location.href = '/'
+          // window.location.href = $route
         })
     }
   },
