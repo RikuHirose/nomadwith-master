@@ -36,6 +36,12 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ChatRepositoryInterface::class,
             \App\Repositories\Eloquent\ChatRepository::class
         );
+
+        // SocialProvider
+        $this->app->bind(
+            \App\Repositories\SocialProviderRepositoryInterface::class,
+            \App\Repositories\Eloquent\SocialProviderRepository::class
+        );
     }
 
     /**
