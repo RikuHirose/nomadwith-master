@@ -7,11 +7,22 @@ use App\Http\Controllers\Controller;
 use Socialite;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\SocialProvider;
+use App\Repositories\SocialProviderRepositoryInterface;
 
 class SocialController extends Controller
 {
+    /** @var SocialProviderRepositoryInterface */
+    protected $socialProviderRepository;
+
+    public function __construct(
+        SocialProviderRepositoryInterface $socialProviderRepository
+    ) {
+        $this->socialProviderRepository = $socialProviderRepository;
+    }
+
         /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the FaceBook authentication page.
      *
      * @return Response
      */
@@ -21,7 +32,7 @@ class SocialController extends Controller
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the FaceBook authentication page.
      *
      * @return Response
      */
@@ -31,7 +42,7 @@ class SocialController extends Controller
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from FaceBook.
      *
      * @return Response
      */
@@ -44,8 +55,10 @@ class SocialController extends Controller
             return redirect("/");
         }
 
-        //すでに登録済みかチェック
-        $socialProvider = User::where('facebook_id',$facebookUser->getId())->first();
+        //privider_idとemailですでに登録済みかチェック
+        $socialProvider = $this->socialProviderRepository->findSocialProvider($facebookUser->getId(), $facebookUser->getEmail());
+        // $socialProvider = SocialProvider::where('provider_id',$facebookUser->getId())->first();
+        dd($socialProvider);
 
         if(!$socialProvider) {
 
