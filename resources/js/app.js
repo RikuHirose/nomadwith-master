@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import VModal from 'vue-js-modal'
 import Chat from 'vue-beautiful-chat'
+import InfiniteLoading from 'vue-infinite-loading'
 
 import {routes} from './routes'
 import StoreData from './store'
@@ -30,6 +31,7 @@ if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
 }
 
+Vue.component('infinite-loading', InfiniteLoading);
 
 const app = new Vue({
   el: '#app',

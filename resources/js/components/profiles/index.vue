@@ -4,8 +4,8 @@
 
     <div class="row">
       <div
-      v-for="(profile, index) in profiles"
-      class="col-md-4 col-sm-6 col-xs-12">
+        v-for="(profile, index) in profiles"
+        class="col-md-4 col-sm-6 col-xs-12">
         <div
         class="card">
           <img class="card-img-top" :src="profile.img_url" alt="Card image cap">
@@ -32,7 +32,12 @@
         </div>
       </div>
     </div>
-
+    <infinite-loading
+      ref="infiniteLoading"
+      spinner="spiral"
+      @infinite="infiniteHandler">
+      <span slot="no-more">もうないよ〜</span>
+    </infinite-loading>
   </div>
 
 </template>
@@ -49,6 +54,9 @@ export default {
 
   data () {
     return {
+      profileLists: [],
+      getNum: 3,
+      getIndex: 0,
     }
   },
 
@@ -71,7 +79,23 @@ export default {
     fetch () {
       this.$store.dispatch('getProfiles')
     },
+    infiniteHandler() {
+      setTimeout(() => {
+        if (this.profiles.length < this.getIndex) {
+          // console.log(this.profiles.slice(0, 3))
+          // console.log(this.profiles.slice(3, 6))
+          // console.log(this.profiles.slice(6, 9))
+          // this.profileLists.push(this.profiles.slice(this.getIndex, this.getNum));
+          // this.getIndex += 3
+          // this.getNum += 3
+          this.getIndex += this.profiles.length
+          this.$refs.infiniteLoading.stateChanger.loaded()
 
-  },
+        } else {
+          this.$refs.infiniteLoading.stateChanger.complete()
+        }
+      }, 1000)
+    }
+  }
 }
 </script>
