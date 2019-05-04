@@ -8,6 +8,9 @@ import Mypage from './components/mypage/show.vue'
 import Chat from './components/chat/index.vue'
 import ChatMessages from './components/chat/chatMessages.vue'
 
+import Login from './components/auth/login.vue'
+import Signup from './components/auth/signup.vue'
+
 
 
 export const routes = [
@@ -40,8 +43,22 @@ export const routes = [
         component: Mypage
       },
       {
-        path: 'chats/:id',
+        path: 'chats',
         component: Chat,
+        children: [
+          {
+            path: ':id',
+            component: Chat
+          },
+        ]
+      },
+      {
+        path: 'login',
+        component: Login
+      },
+      {
+        path: 'signup',
+        component: Signup
       }
     ]
   }

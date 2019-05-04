@@ -31,7 +31,7 @@
                       class="c-chat-message__box"
                       :class="{ 'self': message.selfMessage }">
                       <template
-                        v-if="message.send_from == currentUser.id">
+                        v-if="message.send_from.id === currentUser.id">
                         <p
                           v-if="message.id"
                           :id="`chat-message-${message.id}`"
@@ -39,7 +39,7 @@
                       </template>
                       <template
                         v-else>
-                        <strong class="c-chat-message__box--user">hoge</strong>
+                        <strong class="c-chat-message__box--user">{{ message.send_from.profile.name }}</strong>
                         <p
                           v-if="message.id"
                           :id="`chat-message-${message.id}`"

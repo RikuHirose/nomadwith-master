@@ -55,12 +55,7 @@
         </p>
       </div>
     </div>
-    <button @click="showModal = true">モーダル表示</button>
-    <contact
-    v-if="showModal"
-    @close="showModal = false"
-    :profileId="profile.id"
-    ></contact>
+
 
   </div>
 

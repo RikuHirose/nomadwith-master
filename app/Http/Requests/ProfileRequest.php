@@ -24,7 +24,6 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'user_id'      => 'required|numeric',
             'user_id'         => 'numeric|nullable',
             'profile_id'      => 'numeric|nullable',
             'request_user_id' => 'numeric|nullable',
@@ -40,6 +39,7 @@ class ProfileRequest extends FormRequest
             'mail_text'       => 'max:255|nullable',
             'profile_name'    => 'max:255|nullable',
             'from_email'      => 'max:255',
+            'image'           => 'file|mimes:jpeg,bmp,png|max:10000'
 
         ];
     }

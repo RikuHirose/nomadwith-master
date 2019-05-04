@@ -39,7 +39,14 @@ class ProfileController extends Controller
 
     public function update(Profile $profile, ProfileRequest $request)
     {
-      $profile->fill($request->all())->save();
+      if ($request->hasFile('image')) {
+        if ($request->file('image')->isValid()) {
+          $profile = $this->profileRepository->updateProfileImage($profile, $request->file('image'));
+        }
+      } else {
+        $profile->fill($request->all())->save();
+      }
+
       $profile->load('user');
 
       return response()->json(['profile' => $profile]);

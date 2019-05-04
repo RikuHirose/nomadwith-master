@@ -19,7 +19,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
     ];
@@ -73,6 +72,11 @@ class User extends Authenticatable
     public function chatUser()
     {
         return $this->hasMany(\App\Models\ChatUser::class, 'user_id', 'id');
+    }
+
+    public function chatMessage()
+    {
+        return $this->hasMany(\App\Models\ChatMessage::class, 'send_from', 'id');
     }
 
 }

@@ -52,10 +52,12 @@
     },
     methods: {
       fetchMessages () {
-        this.$store.dispatch('getChatMessages', {
-          currentUser: this.currentUser,
-          matchId: this.$route.params.id
-        })
+        if (this.$route.params.id) {
+          this.$store.dispatch('getChatMessages', {
+            currentUser: this.currentUser,
+            matchId: this.$route.params.id
+          })
+        }
       },
       scrollToLastMessage(lastMessageId) {
         document.getElementById(lastMessageId).scrollIntoView()

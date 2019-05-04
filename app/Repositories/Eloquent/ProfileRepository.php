@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\ProfileRepositoryInterface;
 use App\Models\Profile;
+use Storage;
 
 class ProfileRepository implements ProfileRepositoryInterface
 {
@@ -56,6 +57,17 @@ class ProfileRepository implements ProfileRepositoryInterface
         return $profiles;
     }
 
+    public function updateProfileImage($profile, $imageFile)
+    {
+        $profileId = $profile->id;
+        $path = Storage::disk('s3')->putFile('pklinks', $imageFile, 'public');
+        $url = Storage::disk('s3')->url($path);
 
+        $profile = $profile->fill(['img_url' => $url])->save();
+
+        $profile = $this->profile->where('id', $profileId)->first();
+
+        return $profile;
+    }
 
 }

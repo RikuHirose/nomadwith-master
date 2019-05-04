@@ -39,7 +39,7 @@
         }
         // let messageObj = this.buildMessage();
 
-        this.$store.dispatch('sendMessage', {
+        this.$store.dispatch('sendChatMessage', {
           currentUser: this.currentUser,
           matchId: this.$route.params.id,
           message: this.message.trim()

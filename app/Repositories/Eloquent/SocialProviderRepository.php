@@ -16,8 +16,8 @@ class SocialProviderRepository implements SocialProviderRepositoryInterface
         $this->socialProvider = $socialProvider;
     }
 
-    public function findSocialProvider($provider_id, $email)
+    public function findSocialProvider($provider_id)
     {
-        return $this->socialProvider->where('provider_id', $provider_id)->orWhere('email', $email)->first();
+        return $this->socialProvider->where('provider_id', $provider_id)->first();
     }
 }

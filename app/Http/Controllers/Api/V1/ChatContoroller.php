@@ -38,18 +38,19 @@ class ChatController extends Controller
         $this->chatRepository = $chatRepository;
     }
 
-    public function getMessages(Request $request)
+    public function getChatMessages(Request $request)
     {
         $data = $request->all();
         $match_id = $data['matchId'];
 
         $chat_id = Chat::where('match_id', $match_id)->pluck('id')->first();
         $chatMessages = ChatMessage::where('chat_id', $chat_id)->get();
+        $chatMessages->load('sendFrom.profile');
 
         return response()->json(['chatMessages' => $chatMessages]);
     }
 
-    public function sendMessage(Request $request)
+    public function sendChatMessage(Request $request)
     {
         $data = $request->all();
         $match_id = $data['matchId'];
@@ -60,6 +61,7 @@ class ChatController extends Controller
         $chatMessage = ChatMessage::create(['chat_id' => $chat_id, 'send_from' => $currentUser['id'], 'message' => $message]);
 
         $chatMessages = ChatMessage::where('chat_id', $chat_id)->get();
+        $chatMessages->load('sendFrom.profile');
 
         return response()->json(['chatMessages' => $chatMessages]);
     }

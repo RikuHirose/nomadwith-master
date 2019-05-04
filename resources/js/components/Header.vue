@@ -8,18 +8,29 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <template v-if="!currentUser">
-              <li>
-                <a href="/auth/login/facebook" class="dropdown-item">FaceBookでLogin</a>
-              </li>
-              <li>
-                <a href="/auth/login/twitter" class="dropdown-item">TwitterでLogin</a>
-              </li>
+            <li>
+              <router-link
+                :to="`/login`"
+                class="dropdown-item">Login</router-link>
+            </li>
+            <li>
+              <a href="/auth/login/facebook" class="dropdown-item">FaceBookでLogin</a>
+            </li>
+            <li>
+              <a href="/auth/login/twitter" class="dropdown-item">TwitterでLogin</a>
+            </li>
           </template>
           <template v-else>
             <li class="nav-item">
               <router-link
                 v-if="matchedFirstUser"
                 :to="`/chats/${matchedFirstUser.match_id}`"
+                class="">
+                <i class="fas fa-comment"></i>
+              </router-link>
+              <router-link
+                v-else
+                to="/chats"
                 class="">
                 <i class="fas fa-comment"></i>
               </router-link>

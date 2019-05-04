@@ -27,6 +27,12 @@
           ]
         })
       })
+
+    },
+    methods: {
+      changeImage() {
+        console.log(111)
+      }
     }
   }
 

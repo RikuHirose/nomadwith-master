@@ -126,6 +126,29 @@ export default {
           alert(err)
         })
     },
+    updateProfileImage ({ commit }, {profileId, image}) {
+      let formData = new FormData()
+      formData.append('image', image)
+      formData.append('profileId', profileId)
+      let config = {
+          headers: {
+              'content-type': 'multipart/form-data'
+          }
+      }
+      config.headers['X-HTTP-Method-Override'] = 'PUT';
+      /*
+      ** PUTだとfileを送れない
+      ** https://qiita.com/komatzz/items/21b58c92e14d2868ac8e
+      */
+      axios
+        .post(`/api/v1/profiles/${profileId}/`, formData, config)
+        .then((response) => {
+          commit('updateProfile', response.data.profile || [])
+        })
+        .catch((err) => {
+          alert(err)
+        })
+    },
     matchedUsers ({ commit }, {currentUser}) {
       axios
         .post(`/api/v1/matches/users`,{
@@ -140,7 +163,7 @@ export default {
     },
     getChatMessages ({ commit }, {currentUser, matchId}) {
       axios
-        .post(`/api/v1/chats/getMessages`,{
+        .post(`/api/v1/chats/getChatMessages`,{
           currentUser: currentUser,
           matchId: matchId
         })
@@ -151,9 +174,9 @@ export default {
           alert(err)
         })
     },
-    sendMessage ({ commit }, {currentUser, matchId, message}) {
+    sendChatMessage ({ commit }, {currentUser, matchId, message}) {
       axios
-        .post(`/api/v1/chats/sendMessage`,{
+        .post(`/api/v1/chats/sendChatMessage`,{
           currentUser: currentUser,
           matchId: matchId,
           message: message

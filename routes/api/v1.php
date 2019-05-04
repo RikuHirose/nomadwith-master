@@ -4,15 +4,6 @@
 Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function() {
   Route::group(['prefix' => 'v1', 'as' => 'v1.', 'namespace' => 'V1'], function() {
 
-    Route::group(['prefix' => 'auth'], function ($router) {
-
-        Route::post('login', 'AuthController@login');
-        Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
-        Route::post('me', 'AuthController@me');
-
-    });
-
     // Route::group(['middleware' => 'api.auth'], function() {
     Route::group([], function() {
       Route::group(['prefix' => 'profiles', 'as' => 'profiles.'],
@@ -35,8 +26,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
 
       Route::group(['prefix' => 'chats', 'as' => 'chats.'],
         function () {
-            Route::post('/getMessages', 'ChatController@getMessages');
-            Route::post('/sendMessage', 'ChatController@sendMessage');
+            Route::post('/getChatMessages', 'ChatController@getChatMessages');
+            Route::post('/sendChatMessage', 'ChatController@sendChatMessage');
       });
     });
 

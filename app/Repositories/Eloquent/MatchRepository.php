@@ -43,44 +43,60 @@ class MatchRepository implements MatchRepositoryInterface
         ])
         ->exists();
 
-        if ($like == false) {
-             $liked = $this->match->firstOrCreate([
-                'request_user_id' => $formData['request_user_id'],
-                'target_user_id'  => $formData['target_user_id'],
-                'matched_flag'    => false
-            ])->save();
+        if ($this->checkDuplicateUserId($formData)) {
+            return '自分にはいいねできません';
 
-             return $message = 'いいねしました';
+        }
+
+        if ($like === false) {
+
+             $liked = $this->match->firstOrCreate([
+                    'request_user_id' => $formData['request_user_id'],
+                    'target_user_id'  => $formData['target_user_id'],
+                    'matched_flag'    => false
+                ])->save();
+
+            return $message = 'いいねしました';
 
         } else {
 
-            $same_liked = $this->match
-            ->where([
-                'request_user_id' => $formData['request_user_id'],
-                'target_user_id'  => $formData['target_user_id'],
-            ])
-            ->exists();
-
-            if ($same_liked == true) {
+            if ($this->checkDuplicateLike($formData) === true) {
                 return $message = 'すでにいいねしたユーザーにはいいねできません';
 
-            } else {
-                $liked = $this->match
+            }
+
+            $liked = $this->match
                 ->where([
                     'request_user_id' => $formData['target_user_id'],
                     'target_user_id'  => $formData['request_user_id'],
                 ])
                 ->first();
 
-                $liked = $liked->update(['matched_flag' => true]);
+            $liked->update(['matched_flag' => true]);
 
-                $chat = Chat::create(['match_id' => $liked->id]);
+            $chat = Chat::create(['match_id' => $liked->id]);
 
-                return $message = 'マッチしました';
-            }
+            return $message = 'マッチしました';
 
         }
 
+    }
+
+    protected function checkDuplicateUserId($formData){
+        if ($formData['request_user_id'] === $formData['target_user_id']) {
+            return true;
+        }
+    }
+
+    protected function checkDuplicateLike($formData){
+        $duplicateLiked = $this->match
+            ->where([
+                'request_user_id' => $formData['request_user_id'],
+                'target_user_id'  => $formData['target_user_id'],
+            ])
+            ->exists();
+
+        return $duplicateLiked;
     }
 
     public function matchedUsersDesc($currentUserId)

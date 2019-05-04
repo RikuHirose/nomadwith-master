@@ -56,24 +56,25 @@ class SocialController extends Controller
         }
 
         //privider_idとemailですでに登録済みかチェック
-        $provider = $this->socialProviderRepository->findSocialProvider($socialUser->getId(), $socialUser->getEmail());
+        $provider = $this->socialProviderRepository->findSocialProvider($socialUser->getId());
 
         if(!$provider) {
 
             $user = User::firstOrCreate(
-                []
+                [
+                    'email' => $socialUser->getEmail(),
+                ]
             );
 
             SocialProvider::firstOrCreate(
                 [
                     'user_id'     => $user->id,
-                    'email'       => $socialUser->getEmail(),
                     'provider_id' => $socialUser->getId(),
                     'provider'    => $provider
                 ]
             );
 
-            $profile = Profile::firstOrCreate(
+            Profile::firstOrCreate(
                 ['user_id' => $user->id, 'name' => $socialUser->getName(),'img_url' => $socialUser->avatar_original]
             );
 

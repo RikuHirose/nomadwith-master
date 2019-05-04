@@ -17,22 +17,20 @@
 // Route::get('/{any?}', 'HomeController@index')->name('index')->where('any', '.*');
 Route::get('{all}', 'HomeController@index')->where('all', '^((?!auth).)*');
 
-// Route::get('/', function(){
-//     return view('welcome');
-// });
 
 Auth::routes();
 
-// Route::get('/', 'HomeController@index');
+Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
+  // Route::get('login', 'Auth\SocialController@viewLogin');
 
-Route::group(['middleware' => ['guest']], function () {
-  Route::get('auth/login', 'Auth\SocialController@viewLogin');
+  Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
+  Route::get('{provider}/callback', 'Auth\SocialController@handleProviderCallback');
 
-  Route::get('auth/login/{provider}', 'Auth\SocialController@redirectToProvider');
-  Route::get('auth/{provider}/callback', 'Auth\SocialController@handleProviderCallback');
-
-  // Route::get('auth/login/twitter', 'Auth\SocialController@redirectToTwitterProvider');
-  // Route::get('auth/twitter/callback', 'Auth\SocialController@handleTwitterProviderCallback');
+  // Route::post('login', 'LoginController@login');
+  // Route::post('logout', 'LoginController@logout');
+  // Route::post('refresh', 'AuthController@refresh');
+  // Route::post('me', 'AuthController@me');
+  // Auth::routes();
 });
 
 
