@@ -5,6 +5,7 @@ use App\Repositories\MatchRepositoryInterface;
 use App\Models\Match;
 use App\Models\User;
 use App\Models\Chat;
+use App\Models\ChatUser;
 
 class MatchRepository implements MatchRepositoryInterface
 {
@@ -74,10 +75,12 @@ class MatchRepository implements MatchRepositoryInterface
                     'target_user_id'  => $formData['request_user_id'],
                 ])
                 ->first();
-
             $liked->update(['matched_flag' => true]);
 
             $chat = Chat::create(['match_id' => $liked->id]);
+
+            ChatUser::create(['chat_id' => $chat->id, 'user_id' => $liked->target_user_id]);
+            ChatUser::create(['chat_id' => $chat->id, 'user_id' => $liked->request_user_id]);
 
             return $message = 'マッチしました';
 
