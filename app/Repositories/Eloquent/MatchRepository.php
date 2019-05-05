@@ -62,7 +62,10 @@ class MatchRepository implements MatchRepositoryInterface
 
             if ($this->checkDuplicateLike($formData) === true) {
                 return $message = 'すでにいいねしたユーザーにはいいねできません';
+            }
 
+            if ($this->checkDuplicateMatch($formData) === true) {
+                return $message = 'すでにマッチしたユーザーにはいいねできません';
             }
 
             $liked = $this->match
@@ -99,21 +102,69 @@ class MatchRepository implements MatchRepositoryInterface
         return $duplicateLiked;
     }
 
-    public function matchedUsersDesc($currentUserId)
-    {
+    protected function checkDuplicateMatch($formData){
+        $duplicateMatch = $this->match
+        ->where(function ($query) use ($formData)
+        {
+            $query->where('request_user_id', $formData['request_user_id'])
+                  ->where('target_user_id', $formData['target_user_id'])
+                  ->where('matched_flag', true);
+        })
+        ->orWhere(function ($query) use ($formData)
+        {
+            $query->where('request_user_id', $formData['target_user_id'])
+                  ->where('target_user_id', $formData['request_user_id'])
+                  ->where('matched_flag', true);
+        })
+        ->exists();
+
+        return $duplicateMatch;
+    }
+
+    protected function searchMatchdUsers($currentUserId){
         $matchedUsers = $this->match
-        ->where([
-            'request_user_id' => $currentUserId,
-            'matched_flag'    => true
-        ])
-        ->orWhere([
-            'target_user_id'  => $currentUserId,
-            'matched_flag'    => true
-        ])
+        ->where(function ($query) use ($currentUserId)
+        {
+            $query->where('request_user_id', $currentUserId)
+                ->where('matched_flag', true);
+        })
+        ->orWhere(function ($query) use ($currentUserId)
+        {
+            $query->where('target_user_id', $currentUserId)
+                ->where('matched_flag', true);
+        })
+        ->exists();
+
+        return $matchedUsers;
+    }
+
+    protected function getMatchdUsers($currentUserId){
+        $matchedUsers = $this->match
+        ->where(function ($query) use ($currentUserId)
+        {
+            $query->where('request_user_id', $currentUserId)
+                ->where('matched_flag', true);
+        })
+        ->orWhere(function ($query) use ($currentUserId)
+        {
+            $query->where('target_user_id', $currentUserId)
+                ->where('matched_flag', true);
+        })
         ->get();
 
+        return $matchedUsers;
+    }
+
+    public function matchedUsersDesc($currentUserId)
+    {
+
+        if ($this->searchMatchdUsers($currentUserId) === false) {
+            return  ['fail' => 'マッチしたユーザーがいません'];
+        }
         // current userではないuserのみを取得したい
         $collection = collect();
+        $matchedUsers = $this->getMatchdUsers($currentUserId);
+
         foreach ($matchedUsers as $key => $value) {
 
             if ($value->request_user_id !== $currentUserId) {

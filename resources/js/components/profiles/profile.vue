@@ -12,7 +12,7 @@
 
       <div class="w-75 mx-auto text-center">
         <p class="mt-3 mb-3">
-          <button type="button" class="btn btn-primary btn-lg" @click="postLike()">Large button</button>
+          <button type="button" class="btn btn-primary btn-lg" @click="postLike()">いいねする</button>
         </p>
       </div>
 
@@ -51,7 +51,7 @@
 
       <div class="w-75 mx-auto text-center">
         <p class="mt-3 mb-3">
-          <button type="button" class="btn btn-primary btn-lg">Large button</button>
+          <button type="button" class="btn btn-primary btn-lg" @click="postLike()">いいねする</button>
         </p>
       </div>
     </div>

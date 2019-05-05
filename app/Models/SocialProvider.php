@@ -16,7 +16,6 @@ class SocialProvider extends Model
      */
     protected $fillable = [
         'user_id',
-        'email',
         'provider_id',
         'provider',
     ];

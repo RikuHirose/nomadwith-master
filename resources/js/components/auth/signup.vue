@@ -9,6 +9,10 @@
         class="dropdown-item active">signup</router-link>
     </div>
     <form class="mt-5 mb-5">
+      <div class="mx-auto" style="width: 320px;">
+        <a href="/auth/login/facebook" class="btn btn-primary" role="button">FaceBookでLogin</a>
+        <a href="/auth/login/twitter" class="btn btn-primary" role="button">TwitterでLogin</a>
+      </div>
       <div class="form-group row">
           <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 

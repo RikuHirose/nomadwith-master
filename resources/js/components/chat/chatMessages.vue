@@ -5,7 +5,7 @@
       class="c-chat-message__box"
       :class="{ 'self': message.selfMessage }">
       <template
-        v-if="message.send_from == currentUser.id">
+        v-if="message.send_from.id === currentUser.id">
         <p
           v-if="message.id"
           :id="`chat-message-${message.id}`"
@@ -13,7 +13,7 @@
       </template>
       <template
         v-else>
-        <strong class="c-chat-message__box--user">hoge</strong>
+        <strong class="c-chat-message__box--user">{{ message.send_from.profile.name }}</strong>
         <p
           v-if="message.id"
           :id="`chat-message-${message.id}`"
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+  import isMobile from '../../utils/DeviceUtility.js'
+  // isMobile.isMobile()
   export default {
     name: 'chat-messages',
     props: [],
@@ -32,32 +34,34 @@
       }
     },
     created () {
-      this.fetchMessages()
-    },
-    mounted() {
+
+      if (this.$route.params.id) {
+        this.fetchMessages(this.$route.params.id)
+      }
     },
     updated () {
-      this.scrollToLastMessage(`chat-message-${this.lastMessage.id}`)
+      if (this.lastMessage) {
+        this.scrollToLastMessage(`chat-message-${this.lastMessage.id}`)
+      }
     },
     computed: {
       currentUser() {
         return this.$store.getters.currentUser
       },
+
       messages() {
-        return this.$store.getters.messages
+          return this.$store.getters.messages
       },
       lastMessage() {
-        return this.$store.getters.messages.slice(-1)[0]
+        return this.$store.getters.lastMessage
       },
     },
     methods: {
-      fetchMessages () {
-        if (this.$route.params.id) {
-          this.$store.dispatch('getChatMessages', {
-            currentUser: this.currentUser,
-            matchId: this.$route.params.id
-          })
-        }
+      fetchMessages (match_id) {
+        this.$store.dispatch('getChatMessages', {
+          currentUser: this.currentUser,
+          matchId: match_id
+        })
       },
       scrollToLastMessage(lastMessageId) {
         document.getElementById(lastMessageId).scrollIntoView()

@@ -25,6 +25,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "ismobilejs": "^0.5.1",
         "vue": "^2.6.10",
         "vue-beautiful-chat": "^2.2.0",
         "vue-infinite-loading": "^2.4.4",
